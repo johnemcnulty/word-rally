@@ -301,7 +301,10 @@ const STAGES = [
 ];
 const MASTERED = 4;      // stage after clearing all four contexts
 const COOLDOWN = 3;      // a word can't reappear within this many questions
-const ACTIVE_MAX = 5;    // max words in progress before new words are introduced
+const ACTIVE_MAX = 8;    // max words in progress before new words wait their turn
+const GRADUATE = 3;      // a word stops counting as "in progress" after 3 question types answered right
+const NEW_EVERY = 4;     // every 4th question is a brand-new word, whatever the cap says
+let sinceNew = 0;        // questions since the last brand-new word
 const STATS = {};        // per-word learning state; survives across races until page closes
 const recent = [];
 
@@ -323,10 +326,11 @@ function weightLabel(w){
   if (last === 0) return s.wrong >= 2 ? "missed again" : "missed";
   return s.runRight >= 2 ? "right 2+ in a row" : "right once";
 }
-// Words enter play gradually: once ACTIVE_MAX words are "in progress" (seen but not yet
-// through all four contexts), new words wait. Without this, 30 words at weight 1 swamp the
-// draw and a race is nearly all first-time definition questions.
-function learningCount(){ return WORDS.filter(x=>{const s=stat(x.w); return s.seen && s.stage<MASTERED;}).length; }
+// Words enter play gradually so each one gets repeated practice: while ACTIVE_MAX words are
+// in progress (seen, but not yet right in GRADUATE question types), new words wait. Every
+// NEW_EVERY-th question is a new word anyway, so the deck keeps moving. Graduated words come
+// back at their low weight, which is when they meet the remaining question types.
+function learningCount(){ return WORDS.filter(x=>{const s=stat(x.w); return s.seen && s.stage<GRADUATE;}).length; }
 function queued(w){ return !stat(w).seen && learningCount() >= ACTIVE_MAX; }
 function eligible(){
   const pool = WORDS.filter(x => !recent.includes(x.w));
@@ -334,7 +338,13 @@ function eligible(){
 }
 function effectiveWeights(){
   const pool = eligible();
-  let ws = pool.map(x => queued(x.w) ? 0 : weightOf(x.w));
+  const full = learningCount() >= ACTIVE_MAX;
+  const newTurn = sinceNew >= NEW_EVERY - 1 && pool.some(x => !stat(x.w).seen);
+  let ws = pool.map(x => {
+    const fresh = !stat(x.w).seen;
+    if (newTurn) return fresh ? 1 : 0;          // this question introduces a new word
+    return fresh && full ? 0 : weightOf(x.w);
+  });
   if (!ws.some(v=>v>0)) ws = pool.map(x => weightOf(x.w));
   return {pool, ws, tot: ws.reduce((a,b)=>a+b,0)};
 }
@@ -389,6 +399,7 @@ function makeQuestion(item){
 }
 function recordAnswer(item, ok){
   const s = stat(item.w);
+  sinceNew = s.seen ? sinceNew + 1 : 0;
   s.seen++; s.hist.push(ok?1:0); if (s.hist.length>20) s.hist.shift();
   if (ok){ s.right++; s.runRight++; s.stage = Math.min(MASTERED, s.stage+1); }
   else   { s.wrong++; s.runRight = 0; s.stage = Math.max(0, s.stage-1); }
@@ -945,14 +956,14 @@ function wordLab(onClose){
       <td>${stageName}</td>
       <td><span class="hist">${s.hist.slice(-8).map(h=>`<i class="h${h}"></i>`).join("") || `<span style="color:var(--muted)">\u2014</span>`}</span></td>
       <td><span class="mult" style="color:${hot?"var(--bad)":"inherit"}">${w}\u00D7</span> <span style="color:var(--muted);font-size:12px">${weightLabel(x.w)}</span></td>
-      <td>${ch[x.w]?`<span class="bar ${hot?"hot":""}"><span style="width:${100*ch[x.w]/maxCh}%"></span></span>${(100*ch[x.w]).toFixed(1)}%`:`<span style="color:var(--muted);font-size:12px">${recent.includes(x.w)?"cooling down":"queued"}</span>`}</td>
+      <td>${ch[x.w]?`<span class="bar ${hot?"hot":""}"><span style="width:${100*ch[x.w]/maxCh}%"></span></span>${(100*ch[x.w]).toFixed(1)}%`:`<span style="color:var(--muted);font-size:12px">${recent.includes(x.w)?"cooling down":stat(x.w).seen?"after the new word":"waiting"}</span>`}</td>
       <td>${src}</td>
     </tr>`;
   };
   const seen = WORDS.filter(x=>stat(x.w).seen).length;
   const m = openModal(`
     <h2>Word Lab</h2>
-    <p class="sub">How the question engine sees each of the ${WORDS.length} words right now (${seen} seen so far). Weights: new 1\u00D7 \u00B7 right once 0.7\u00D7 \u00B7 right 2+ in a row 0.4\u00D7 \u00B7 missed 3\u00D7 \u00B7 missed again 5\u00D7. The last ${COOLDOWN} words asked sit out so a missed word returns after a short gap. New words are queued while ${ACTIVE_MAX} words are still in progress, so each word can work through its contexts (Definition \u2192 In context \u2192 Complete the sentence \u2192 Name the word); a miss moves it back one.</p>
+    <p class="sub">How the question engine sees each of the ${WORDS.length} words right now (${seen} seen so far). Weights: new 1\u00D7 \u00B7 right once 0.7\u00D7 \u00B7 right 2+ in a row 0.4\u00D7 \u00B7 missed 3\u00D7 \u00B7 missed again 5\u00D7. The last ${COOLDOWN} words asked sit out so a missed word returns after a short gap. New words wait while ${ACTIVE_MAX} words are in progress (a word stays in progress until it has been answered right in ${GRADUATE} question types), and every ${NEW_EVERY}th question is a new word regardless. Each word works through four question types (Definition \u2192 In context \u2192 Complete the sentence \u2192 Name the word); a miss moves it back one.</p>
     <input class="labSearch" id="labSearch" placeholder="Search ${WORDS.length} words\u2026" autocomplete="off">
     <div style="overflow-x:auto"><table class="lab">
       <thead><tr><th>Word</th><th>Next context</th><th>History</th><th>Weight</th><th>Chance next</th><th>Source</th></tr></thead>
@@ -1202,9 +1213,11 @@ function syncOnlineG(s, meId){
 // adaptive weights. `exclude` is the word currently on screen.
 function computePick(exclude){
   const saved = recent.slice();
+  const savedSince = sinceNew;
   if (exclude && !recent.includes(exclude)) recent.push(exclude);
+  if (exclude) sinceNew = stat(exclude).seen ? sinceNew + 1 : 0;   // count the question on screen
   const item = pickWord();
-  recent.length = 0; recent.push(...saved);
+  recent.length = 0; recent.push(...saved); sinceNew = savedSince;
   return {word:item.w, stage:stat(item.w).stage};
 }
 function maxSeq(s){ return s.events.reduce((m,e)=>Math.max(m,e.seq), 0); }
