@@ -299,66 +299,83 @@ const STAGES = [
   {key:"cloze",    label:"Complete the sentence"},
   {key:"describe", label:"Name the word"},
 ];
-const MASTERED = 4;      // stage after clearing all four contexts
-const COOLDOWN = 3;      // a word can't reappear within this many questions
-const ACTIVE_MAX = 8;    // max words in progress before new words wait their turn
-const GRADUATE = 3;      // a word stops counting as "in progress" after 3 question types answered right
-const NEW_EVERY = 4;     // every 4th question is a brand-new word, whatever the cap says
-let sinceNew = 0;        // questions since the last brand-new word
-const STATS = {};        // per-word learning state; survives across races until page closes
+const FORMS = 4;                 // question types per word
+const MASTERED = FORMS;          // a word with all four types answered right is retired
+const COOLDOWN = 3;              // a word can't reappear within this many questions
+const REVIEW_SHARE = 0.3;        // share of questions drawn from words you last missed
+const FORM_WEIGHTS = [4, 3, 2, 1]; // how often each question type is chosen (earlier types more often)
+const DONE_FACTOR = 0.25;        // types already answered right for a word are chosen less often
+const STATS = {};                // per-word learning state (saved per player in this browser)
 const recent = [];
 
 function stat(w){
-  return STATS[w] || (STATS[w] = {seen:0,right:0,wrong:0,runRight:0,stage:0,hist:[]});
+  return STATS[w] || (STATS[w] = {seen:0,right:0,wrong:0,runRight:0,hist:[],done:[0,0,0,0]});
 }
+// Progress saved by the earlier, linear version stored a "stage" (types cleared in order).
+function migrateStat(st){
+  if (!Array.isArray(st.done)){ const k = Math.min(FORMS, st.stage||0); st.done = [0,1,2,3].map(i => i < k ? 1 : 0); }
+  delete st.stage; delete st.reviews;
+  return st;
+}
+const doneCount = w => stat(w).done.reduce((a,b)=>a+b, 0);
+const isRetired = w => doneCount(w) >= FORMS;
+const lastMissed = w => { const h = stat(w).hist; return h.length > 0 && h[h.length-1] === 0; };
+
 // The multipliers from the design: new 1x, correct 0.7x, correct twice 0.4x, wrong 3x, repeated wrong 5x.
 function weightOf(w){
   const s = stat(w);
   if (!s.seen) return 1;
-  const last = s.hist[s.hist.length-1];
-  if (last === 0) return s.wrong >= 2 ? 5 : 3;
+  if (lastMissed(w)) return s.wrong >= 2 ? 5 : 3;
   return s.runRight >= 2 ? 0.4 : 0.7;
 }
 function weightLabel(w){
   const s = stat(w);
+  if (isRetired(w)) return "retired";
   if (!s.seen) return "new";
-  const last = s.hist[s.hist.length-1];
-  if (last === 0) return s.wrong >= 2 ? "missed again" : "missed";
+  if (lastMissed(w)) return s.wrong >= 2 ? "missed again" : "missed";
   return s.runRight >= 2 ? "right 2+ in a row" : "right once";
 }
-// Words enter play gradually so each one gets repeated practice: while ACTIVE_MAX words are
-// in progress (seen, but not yet right in GRADUATE question types), new words wait. Every
-// NEW_EVERY-th question is a new word anyway, so the deck keeps moving. Graduated words come
-// back at their low weight, which is when they meet the remaining question types.
-function learningCount(){ return WORDS.filter(x=>{const s=stat(x.w); return s.seen && s.stage<GRADUATE;}).length; }
-function queued(w){ return !stat(w).seen && learningCount() >= ACTIVE_MAX; }
+
+// Word selection. Every word is in play until it is retired. Most questions pick from all
+// live words (with the weights above); REVIEW_SHARE of them pick only from words whose last
+// answer was wrong. With hundreds of words in play, weights alone would bring a missed word
+// back only every few races, so the review slot is what keeps misses coming back soon.
 function eligible(){
-  const pool = WORDS.filter(x => !recent.includes(x.w));
-  return pool.length ? pool : WORDS;
+  let pool = WORDS.filter(x => !isRetired(x.w) && !recent.includes(x.w));
+  if (!pool.length) pool = WORDS.filter(x => !isRetired(x.w));
+  if (!pool.length) pool = WORDS.slice();          // everything retired: keep playing
+  return pool;
 }
-function effectiveWeights(){
-  const pool = eligible();
-  const full = learningCount() >= ACTIVE_MAX;
-  const newTurn = sinceNew >= NEW_EVERY - 1 && pool.some(x => !stat(x.w).seen);
-  let ws = pool.map(x => {
-    const fresh = !stat(x.w).seen;
-    if (newTurn) return fresh ? 1 : 0;          // this question introduces a new word
-    return fresh && full ? 0 : weightOf(x.w);
-  });
-  if (!ws.some(v=>v>0)) ws = pool.map(x => weightOf(x.w));
-  return {pool, ws, tot: ws.reduce((a,b)=>a+b,0)};
+function drawPools(){
+  const live = eligible();
+  return {live, missed: live.filter(x => lastMissed(x.w))};
 }
 function drawChances(){
-  const {pool, ws, tot} = effectiveWeights();
-  const out = {};
-  WORDS.forEach(x => { const i = pool.indexOf(x); out[x.w] = i>=0 ? ws[i]/tot : 0; });
+  const {live, missed} = drawPools();
+  const out = {}; WORDS.forEach(x => out[x.w] = 0);
+  const share = missed.length ? REVIEW_SHARE : 0;
+  const sum = arr => arr.reduce((a,x) => a + weightOf(x.w), 0);
+  const tl = sum(live), tm = sum(missed);
+  live.forEach(x => out[x.w] += (1 - share) * weightOf(x.w) / tl);
+  missed.forEach(x => out[x.w] += share * weightOf(x.w) / tm);
   return out;
 }
+function weightedPick(arr){
+  let r = Math.random() * arr.reduce((a,x) => a + weightOf(x.w), 0);
+  for (const x of arr){ r -= weightOf(x.w); if (r <= 0) return x; }
+  return arr[arr.length-1];
+}
 function pickWord(){
-  const {pool, ws, tot} = effectiveWeights();
-  let r = Math.random()*tot;
-  for (let i=0;i<pool.length;i++){ r -= ws[i]; if (r <= 0 && ws[i]>0) return pool[i]; }
-  return pool[ws.findIndex(v=>v>0)];
+  const {live, missed} = drawPools();
+  return weightedPick(missed.length && Math.random() < REVIEW_SHARE ? missed : live);
+}
+// Question type: random, favoring earlier types and types not yet answered right for this word.
+function chooseForm(item){
+  const d = stat(item.w).done;
+  const ws = FORM_WEIGHTS.map((b,f) => b * (d[f] ? DONE_FACTOR : 1));
+  let r = Math.random() * ws.reduce((a,b)=>a+b, 0);
+  for (let f = 0; f < FORMS; f++){ r -= ws[f]; if (r <= 0) return f; }
+  return 0;
 }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 function confusable(a,b){ return a.conf.has(b.w) || b.conf.has(a.w); }
@@ -375,9 +392,9 @@ function highlight(sentence, w){
 }
 function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
-function makeQuestion(item){
+function makeQuestion(item, form = chooseForm(item)){
   const s = stat(item.w);
-  const stage = s.stage < MASTERED ? s.stage : 1 + Math.floor(Math.random()*3);
+  const stage = form;
   const type = STAGES[stage].key;
   let others = shuffle(WORDS.filter(x => x!==item && x.pos===item.pos && !confusable(x,item))).slice(0,3);
   if (others.length < 3) others = others.concat(shuffle(WORDS.filter(x => x!==item && x.pos!==item.pos && !confusable(x,item))).slice(0, 3-others.length));
@@ -397,12 +414,14 @@ function makeQuestion(item){
   }
   return {item, stage, type, label:STAGES[stage].label, stem, options, answer, wasMissed: s.wrong>0};
 }
-function recordAnswer(item, ok){
+// A correct answer checks off that question type and every easier one (if you can produce the
+// word from its description, you know its definition). A miss un-checks that type and any harder one.
+function recordAnswer(item, ok, form){
   const s = stat(item.w);
-  sinceNew = s.seen ? sinceNew + 1 : 0;
+  const f = Number.isInteger(form) && form >= 0 && form < FORMS ? form : 0;
   s.seen++; s.hist.push(ok?1:0); if (s.hist.length>20) s.hist.shift();
-  if (ok){ s.right++; s.runRight++; s.stage = Math.min(MASTERED, s.stage+1); }
-  else   { s.wrong++; s.runRight = 0; s.stage = Math.max(0, s.stage-1); }
+  if (ok){ s.right++; s.runRight++; for (let i = 0; i <= f; i++) s.done[i] = 1; }
+  else   { s.wrong++; s.runRight = 0; for (let i = f; i < FORMS; i++) s.done[i] = 0; }
   recent.push(item.w); while (recent.length > COOLDOWN) recent.shift();
 }
 
@@ -458,7 +477,7 @@ function loadProfile(name){
   Object.keys(STATS).forEach(k=>delete STATS[k]); recent.length = 0;
   const p = (store.profiles||{})[profileKey(name)];
   if (p && p.stats) for (const [w,st] of Object.entries(p.stats))
-    STATS[w] = Object.assign({seen:0,right:0,wrong:0,runRight:0,stage:0,hist:[]}, st);
+    STATS[w] = Object.assign({seen:0,right:0,wrong:0,runRight:0,hist:[],done:[0,0,0,0]}, migrateStat({...st}));
   currentProfile = profileKey(name);
 }
 function saveProgress(){
@@ -473,7 +492,7 @@ function profileSummary(name){
   const p = (store.profiles||{})[profileKey(name)];
   if (!p || !p.stats) return null;
   const st = Object.values(p.stats);
-  return {seen: st.filter(x=>x.seen).length, cleared: st.filter(x=>x.stage>=MASTERED).length, missed: st.filter(x=>x.hist && x.hist[x.hist.length-1]===0).length};
+  return {seen: st.filter(x=>x.seen).length, cleared: st.map(x=>migrateStat({...x})).filter(x=>x.done.every(Boolean)).length, missed: st.filter(x=>x.hist && x.hist[x.hist.length-1]===0).length};
 }
 loadProfile(settings.name);
 
@@ -598,7 +617,7 @@ function playCard(src, key, target){
     case "rout":    one(t=>{const n=back(t,4); return `${nm(t)} back ${n} (now ${t.pos})`;}); break;
     case "pilfer":  one(t=>{const n=steal(src,t,1); return n?`stole ${n} from ${nm(t)}`:`${nm(t)} had nothing to steal`;}); break;
     case "plunder": one(t=>{const n=steal(src,t,2); return n?`stole ${n} from ${nm(t)}`:`${nm(t)} had nothing to steal`;}); break;
-    case "stymie":  one(t=>{freeze(src,t); return `${nm(t)}'s next move is frozen`;}); break;
+    case "stymie":  one(t=>{freeze(src,t); return `${t.human ? "your" : esc(t.name)+"'s"} next move is frozen`;}); break;
     case "deluge":  all(t=>{const n=back(t,2); return `${nm(t)} −${n}`;}); break;
     case "petrify": all(t=>{freeze(src,t); return `${nm(t)} frozen`;}); break;
     case "fortify": src.shield=Math.min(2,src.shield+1); fx(src,"\u{1F6E1}","var(--muted)"); res.push({t:src,text:"shield up"}); break;
@@ -653,7 +672,7 @@ async function answer(i){
   if (!G || G.phase!=="question" || modalOpen()) return;
   const q = G.q, p = me(), ok = i===q.answer;
   G.phase = "feedback"; G.picked = i;
-  recordAnswer(q.item, ok);
+  recordAnswer(q.item, ok, q.stage);
   saveProgress();
   G.asked++;
   let tier = 0, moved = 0;
@@ -762,7 +781,7 @@ function renderQuestion(){
       <span class="chip">${q.label}</span>
       ${q.wasMissed?`<span class="chip review">Review word</span>`:""}
       ${me().frozen && !done?`<span class="chip frozen">❄ Frozen: next correct answer won't move you</span>`:""}
-      <span class="stageDots" title="Retrieval stage for this word">${[0,1,2,3].map(i=>`<i class="${i<Math.min(s.stage,4)?"on":""}"></i>`).join("")}</span>
+      <span class="stageDots" title="Question types answered right for this word">${[0,1,2,3].map(i=>`<i class="${s.done[i]?"on":""}"></i>`).join("")}</span>
     </div>
     <div class="stem">${q.stem}</div>
     <div class="opts">${q.options.map((o,i)=>{
@@ -930,7 +949,7 @@ function endScreen(winner){
     <div class="stat">
       <div><b>${G.correct}/${G.asked}</b><span>answered correctly</span></div>
       <div><b>${acc}%</b><span>accuracy</span></div>
-      <div><b>${WORDS.filter(x=>stat(x.w).stage>=MASTERED).length}</b><span>words cleared all 4 contexts</span></div>
+      <div><b>${WORDS.filter(x=>isRetired(x.w)).length}</b><span>words retired (all 4 question types right)</span></div>
     </div>
     ${missed.length?`<p><b>Missed this race</b></p><ul class="missList">${missed.map(x=>`<li><b>${x.w}</b> — ${esc(x.def)}</li>`).join("")}</ul>`:`<p><b>No misses this race.</b></p>`}
     ${hot.length?`<p class="sub" style="margin-top:12px">Weighted heaviest for your next race: ${hot.map(x=>`<b>${x.w}</b> (${weightOf(x.w)}×)`).join(", ")}</p>`:""}
@@ -946,27 +965,29 @@ function endScreen(winner){
 function wordLab(onClose){
   const ch = drawChances();
   const maxCh = Math.max(...Object.values(ch));
-  const sorted = WORDS.slice().sort((a,b)=>ch[b.w]-ch[a.w] || stat(b.w).seen-stat(a.w).seen || a.w.localeCompare(b.w));
+  // Missed words first, then words in progress (most types done first), then retired, then unseen.
+  const rank = x => lastMissed(x.w) ? 0 : isRetired(x.w) ? 2 : stat(x.w).seen ? 1 : 3;
+  const sorted = WORDS.slice().sort((a,b)=>rank(a)-rank(b) || doneCount(b.w)-doneCount(a.w) || ch[b.w]-ch[a.w] || a.w.localeCompare(b.w));
   const row = x=>{
     const s = stat(x.w), w = weightOf(x.w), hot = w>1;
-    const stageName = s.stage>=MASTERED ? "Cleared all 4" : STAGES[s.stage].label;
+    const stageName = isRetired(x.w) ? "Retired" : `<span class="stageDots" style="margin:0" title="${STAGES.filter((_,i)=>s.done[i]).map(t=>t.label).join(", ")||"none yet"}">${[0,1,2,3].map(i=>`<i class="${s.done[i]?"on":""}"></i>`).join("")}</span> ${doneCount(x.w)}/4`;
     const src = x.src.map(k=>SOURCE_ABBR[k]?`<span class="src" title="${SOURCE_ABBR[k][1]}">${SOURCE_ABBR[k][0]}</span>`:"").join("");
     return `<tr>
       <td class="w" title="${esc(x.def)}">${x.w} <span class="posTag">${POS_ABBR[x.pos]||""}</span></td>
       <td>${stageName}</td>
       <td><span class="hist">${s.hist.slice(-8).map(h=>`<i class="h${h}"></i>`).join("") || `<span style="color:var(--muted)">\u2014</span>`}</span></td>
       <td><span class="mult" style="color:${hot?"var(--bad)":"inherit"}">${w}\u00D7</span> <span style="color:var(--muted);font-size:12px">${weightLabel(x.w)}</span></td>
-      <td>${ch[x.w]?`<span class="bar ${hot?"hot":""}"><span style="width:${100*ch[x.w]/maxCh}%"></span></span>${(100*ch[x.w]).toFixed(1)}%`:`<span style="color:var(--muted);font-size:12px">${recent.includes(x.w)?"cooling down":stat(x.w).seen?"after the new word":"waiting"}</span>`}</td>
+      <td>${ch[x.w]?`<span class="bar ${hot?"hot":""}"><span style="width:${100*ch[x.w]/maxCh}%"></span></span>${(100*ch[x.w]).toFixed(1)}%`:`<span style="color:var(--muted);font-size:12px">${isRetired(x.w)?"retired":"cooling down"}</span>`}</td>
       <td>${src}</td>
     </tr>`;
   };
   const seen = WORDS.filter(x=>stat(x.w).seen).length;
   const m = openModal(`
     <h2>Word Lab</h2>
-    <p class="sub">How the question engine sees each of the ${WORDS.length} words right now (${seen} seen so far). Weights: new 1\u00D7 \u00B7 right once 0.7\u00D7 \u00B7 right 2+ in a row 0.4\u00D7 \u00B7 missed 3\u00D7 \u00B7 missed again 5\u00D7. The last ${COOLDOWN} words asked sit out so a missed word returns after a short gap. New words wait while ${ACTIVE_MAX} words are in progress (a word stays in progress until it has been answered right in ${GRADUATE} question types), and every ${NEW_EVERY}th question is a new word regardless. Each word works through four question types (Definition \u2192 In context \u2192 Complete the sentence \u2192 Name the word); a miss moves it back one.</p>
+    <p class="sub">How the question engine sees each of the ${WORDS.length} words right now (${seen} seen, ${WORDS.filter(x=>isRetired(x.w)).length} retired). Every word is in play until it is retired. Each question picks a word at random from all live words, weighted new 1\u00D7 \u00B7 right once 0.7\u00D7 \u00B7 right 2+ in a row 0.4\u00D7 \u00B7 missed 3\u00D7 \u00B7 missed again 5\u00D7; ${Math.round(REVIEW_SHARE*100)}% of questions instead pick from words you last missed, so misses come back soon. The question type is also random, favoring earlier types (Definition \u2192 In context \u2192 Complete the sentence \u2192 Name the word) and types not yet answered right. A correct answer checks off that type and the easier ones; a miss un-checks that type and the harder ones. When all four are checked, the word retires. The last ${COOLDOWN} words asked sit out.</p>
     <input class="labSearch" id="labSearch" placeholder="Search ${WORDS.length} words\u2026" autocomplete="off">
     <div style="overflow-x:auto"><table class="lab">
-      <thead><tr><th>Word</th><th>Next context</th><th>History</th><th>Weight</th><th>Chance next</th><th>Source</th></tr></thead>
+      <thead><tr><th>Word</th><th>Types done</th><th>History</th><th>Weight</th><th>Chance next</th><th>Source</th></tr></thead>
       <tbody id="labBody"></tbody>
     </table></div>
     <p class="sub" style="font-size:12px;margin-top:10px">Sources: ${Object.values(SOURCE_ABBR).map(([a,t])=>`<b>${a}</b> ${t.split(":")[0]}`).join(" \u00B7 ")}. Hover a word to see its definition.</p>
@@ -1035,7 +1056,7 @@ const serverUrl = () => PAGE_PARAMS.get("server") || SERVER_URL;
 const SESSION_KEY = "wordRally.session";
 const NET = { ws:null, session:null, state:null, version:0, offset:0, seq:-1, recorded:new Set(), sentPick:null,
               tickRound:0, tickAt:0, retry:0, wantOpen:false, pending:null, offerShown:null, endShown:null,
-              timer:null, ping:null, lastPos:{}, lastStatus:null, roundSeqStart:null, revealFrom:0 };
+              timer:null, ping:null, lastPos:{}, lastStatus:null, roundSeqStart:null, revealFrom:0, roundForm:{} };
 function sessLoad(){ try { return JSON.parse(sessionStorage.getItem(SESSION_KEY)); } catch (e) { return null; } }
 function sessSave(v){ try { v ? sessionStorage.setItem(SESSION_KEY, JSON.stringify(v)) : sessionStorage.removeItem(SESSION_KEY); } catch (e) {} }
 const serverNow = () => Date.now() + NET.offset;
@@ -1095,7 +1116,7 @@ function netOpen(firstMsg){
 function resetNet(){
   clearInterval(NET.timer); NET.timer = null;
   Object.assign(NET, { state:null, version:0, seq:-1, sentPick:null, tickRound:0, offerShown:null, endShown:null,
-                       lastPos:{}, lastStatus:null, roundSeqStart:null, revealFrom:0 });
+                       lastPos:{}, lastStatus:null, roundSeqStart:null, revealFrom:0, roundForm:{} });
   NET.recorded.clear();
 }
 function netLeave(){
@@ -1213,12 +1234,10 @@ function syncOnlineG(s, meId){
 // adaptive weights. `exclude` is the word currently on screen.
 function computePick(exclude){
   const saved = recent.slice();
-  const savedSince = sinceNew;
   if (exclude && !recent.includes(exclude)) recent.push(exclude);
-  if (exclude) sinceNew = stat(exclude).seen ? sinceNew + 1 : 0;   // count the question on screen
   const item = pickWord();
-  recent.length = 0; recent.push(...saved); sinceNew = savedSince;
-  return {word:item.w, stage:stat(item.w).stage};
+  recent.length = 0; recent.push(...saved);
+  return {word:item.w, stage:chooseForm(item)};   // "stage" = question type index the server should ask
 }
 function maxSeq(s){ return s.events.reduce((m,e)=>Math.max(m,e.seq), 0); }
 function handleOnlineQuestion(s){
@@ -1228,6 +1247,7 @@ function handleOnlineQuestion(s){
     NET.revealFrom = NET.roundSeqStart ?? Math.max(0, maxSeq(s) - 6);
     NET.roundSeqStart = maxSeq(s);
     NET.askedPick = NET.sentPick;   // the word we asked for this round (when the question hides it)
+    NET.roundForm[q.round] = Math.max(0, STAGES.findIndex(t => t.key === q.type));
     const current = q.word || (NET.sentPick && NET.sentPick.word) || null;
     NET.sentPick = computePick(current);
     netSend({action:"pick", ...NET.sentPick});   // the server needs it before this round ends
@@ -1240,7 +1260,7 @@ function recordOnline(word, ok, round){
   NET.recorded.add(round);
   const item = WORDS.find(x=>x.w===word);
   if (!item) return;
-  recordAnswer(item, ok); saveProgress();
+  recordAnswer(item, ok, NET.roundForm[round] ?? 0); saveProgress();
   G.asked++; if (ok) G.correct++; else G.missed.set(item.w, item);
 }
 function onlinePhase(s){
