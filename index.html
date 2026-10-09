@@ -168,6 +168,18 @@ button.card:disabled{opacity:.55;cursor:default}
 .note{background:var(--surface2);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:14px}
 [hidden]{display:none!important}
 
+/* Challenge sprint */
+body.sprint .track, body.sprint .side{display:none}
+body.sprint .grid{grid-template-columns:1fr;max-width:760px;margin:14px auto 0}
+.sprintBar{display:flex;gap:10px;margin-bottom:10px}
+.sprintBar div{flex:1;background:var(--surface2);border-radius:12px;padding:8px 12px;text-align:center}
+.sprintBar b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.sprintBar span{font-size:12px;color:var(--muted)}
+.chList li{cursor:pointer}
+.chList li:hover b{color:var(--accent)}
+.chList li .sp{flex:1}
+.chList li.empty{cursor:default;color:var(--muted)}
+
 /* Toasts & rivals' turn */
 .toasts{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:70;display:grid;gap:6px;width:min(460px,calc(100% - 24px));pointer-events:none}
 .toast{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:10px 14px;
@@ -669,6 +681,7 @@ function humanTurn(){
 }
 async function answer(i){
   if (G && G.online) return onlineAnswer(i);
+  if (G && G.challenge) return sprintAnswer(i);
   if (!G || G.phase!=="question" || modalOpen()) return;
   const q = G.q, p = me(), ok = i===q.answer;
   G.phase = "feedback"; G.picked = i;
@@ -700,7 +713,7 @@ async function answer(i){
   }
 }
 async function next(){
-  if (G && G.online) return;
+  if (G && (G.online || G.challenge)) return;
   if (!G || G.phase!=="feedback" || modalOpen() || G.drafting) return;
   G.phase = "bots"; G.turnEvents = []; renderQuestion(); renderSide();
   for (const b of G.players.slice(1)){
@@ -767,6 +780,7 @@ function renderQuestion(){
   const el = document.getElementById("qcard");
   if (!G) { el.innerHTML = ""; return; }
   if (G.online) return renderOnlineQuestion();
+  if (G.challenge) return renderSprint();
   if (G.phase==="bots"){
     const ev = G.turnEvents||[];
     el.innerHTML = `<div class="qmeta"><span class="chip">Rivals' turn</span></div>
@@ -812,7 +826,7 @@ function cardHTML(key, tag="div", extra=""){
   </${tag}>`;
 }
 function renderSide(){
-  if (!G) return;
+  if (!G || G.challenge) return;
   const p = me();
   document.getElementById("streak").innerHTML = [1,2,3,4,5].map(i=>
     `<div class="pip ${i<=p.streak?"on":""} ${i===3?"m3":""} ${i===5?"m5":""}"></div>`).join("");
@@ -868,8 +882,9 @@ function targetModal(card){
   });
 }
 function setupScreen(prefillCode){
+  if (G && G.challenge && (!CH.play || CH.play.finished)) endSprintView();
   if (prefillCode) settings.mode = "online";
-  const mode = settings.mode === "online" ? "online" : "solo";
+  const mode = ["online","challenge"].includes(settings.mode) ? settings.mode : "solo";
   const seg = (name, opts, val) => `<div class="seg" data-name="${name}">${opts.map(([v,l])=>`<button data-v="${v}" class="${v===val?"on":""}">${l}</button>`).join("")}</div>`;
   const hasServer = !!serverUrl();
   const m = openModal(`
@@ -884,20 +899,29 @@ function setupScreen(prefillCode){
         <li>Words you miss come back more often, in new kinds of questions, until you know them.</li>
       </ul>
     </div>
-    <div class="field">${seg("mode",[["solo","Solo vs bots"],["online","Play with friends"]],mode)}</div>
+    <div class="field">${seg("mode",[["solo","Solo vs bots"],["online","Play with friends"],["challenge","Challenge"]],mode)}</div>
     <div class="field"><label for="nm">Your name</label><input id="nm" maxlength="14" value="${esc(settings.name)}"><small id="welcome" style="color:var(--muted)"></small></div>
-    <div id="soloOpts" ${mode==="online"?"hidden":""}>
+    <div id="soloOpts" ${mode!=="solo"?"hidden":""}>
       <div class="field"><label>Race length</label>${seg("length",[["short","Short · 20"],["standard","Standard · 30"],["long","Long · 40"]],settings.length)}</div>
       <div class="field"><label>Rivals</label>${seg("level",[["easy","Easy"],["medium","Medium"],["hard","Hard"]],settings.level)}</div>
       <div class="rowEnd"><button class="btn primary" id="go">Start race</button></div>
     </div>
-    <div id="onlineOpts" ${mode==="solo"?"hidden":""}>
+    <div id="onlineOpts" ${mode!=="online"?"hidden":""}>
       ${hasServer ? `
       <div class="field"><label for="code">Join a room</label>
         <div class="joinRow"><input id="code" maxlength="4" placeholder="CODE" autocomplete="off" value="${esc((prefillCode||"").toUpperCase())}"><button class="btn primary" id="join">Join</button></div></div>
       <div class="field"><label>Or start one</label><div><button class="btn" id="create">Create a room</button></div></div>
       <p class="sub" style="font-size:13px">2 to 6 players. Everyone gets a question at the same time.</p>`
       : `<p class="note">Multiplayer needs the Word Rally server. Deploy it with the instructions in the README, then paste its WebSocket URL into <code>SERVER_URL</code> near the bottom of this page.</p>`}
+    </div>
+    <div id="challengeOpts" ${mode!=="challenge"?"hidden":""}>
+      ${hasServer ? `
+      <p class="sub" style="font-size:14px">Answer as many questions as you can before time runs out, then send the link to a friend. You both get the same questions, and the higher score wins.</p>
+      <div class="field"><label>Time limit</label>${seg("chMinutes",[["1","1 minute"],["2","2 minutes"],["3","3 minutes"]],settings.chMinutes||"2")}</div>
+      <div><button class="btn primary" id="chCreate">Create challenge</button></div>
+      <h4 class="lobbyHead">Your challenges</h4>
+      <ul class="lobbyList chList" id="chList"><li class="empty">None yet.</li></ul>`
+      : `<p class="note">Challenges need the Word Rally server. Deploy it with the instructions in the README, then paste its WebSocket URL into <code>SERVER_URL</code> near the bottom of this page.</p>`}
     </div>`, "", "setup");
   m.querySelectorAll(".seg").forEach(sg=>sg.querySelectorAll("button").forEach(b=>b.onclick=()=>{
     sg.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
@@ -905,6 +929,8 @@ function setupScreen(prefillCode){
     if (sg.dataset.name === "mode"){
       m.querySelector("#soloOpts").hidden = b.dataset.v !== "solo";
       m.querySelector("#onlineOpts").hidden = b.dataset.v !== "online";
+      m.querySelector("#challengeOpts").hidden = b.dataset.v !== "challenge";
+      if (b.dataset.v === "challenge" && m.querySelector("#chList")) fillChallengeList(m.querySelector("#chList"));
     }
   }));
   const nm = m.querySelector("#nm"), wb = m.querySelector("#welcome");
@@ -927,7 +953,7 @@ function setupScreen(prefillCode){
   };
   nm.oninput = showWelcome; showWelcome();
   m.querySelector("#go").onclick = go;
-  nm.onkeydown = e=>{ if (e.key==="Enter" && settings.mode!=="online") go(); };
+  nm.onkeydown = e=>{ if (e.key==="Enter" && (settings.mode||"solo")==="solo") go(); };
   const codeIn = m.querySelector("#code");
   if (codeIn){
     codeIn.oninput = ()=>{ codeIn.value = codeIn.value.toUpperCase().replace(/[^A-Z]/g,""); };
@@ -936,6 +962,9 @@ function setupScreen(prefillCode){
     codeIn.onkeydown = e=>{ if (e.key==="Enter") doJoin(); };
     m.querySelector("#create").onclick = ()=>connect({action:"create"});
   }
+  const chBtn = m.querySelector("#chCreate");
+  if (chBtn) chBtn.onclick = ()=>{ useName(); createChallenge(Number(settings.chMinutes || 2)); };
+  if (mode === "challenge" && m.querySelector("#chList")) fillChallengeList(m.querySelector("#chList"));
   setTimeout(()=>((prefillCode && codeIn) ? (nm.value && nm.value!=="You" ? codeIn : nm) : nm).focus(), 50);
 }
 function endScreen(winner){
@@ -1019,12 +1048,17 @@ function wordLab(onClose){
    INPUT
 ------------------------------------------------------------------- */
 document.getElementById("labBtn").onclick = ()=>{
-  if (modalOpen() && !["lobby","end"].includes(modalKind())) return;
+  if (modalOpen() && !["lobby","end","challenge"].includes(modalKind())) return;
   wordLab(()=>{ if (inRoom() && NET.state) applyOnline(NET.state); });
 };
 document.getElementById("newBtn").onclick = ()=>{
-  if (modalOpen() && !["lobby","end"].includes(modalKind())) return;
+  if (modalOpen() && !["lobby","end","challenge"].includes(modalKind())) return;
   if (inRoom()){ if (!confirm("Leave this room?")) return; netLeave(); }
+  if (CH.play && !CH.play.finished){
+    if (!confirm("Stop your challenge now? Your score so far will count.")) return;
+    finishSprint(); return;
+  }
+  endSprintView(); setChallengeParam(null);
   setupScreen("");
 };
 document.addEventListener("keydown", e=>{
@@ -1440,6 +1474,321 @@ function onlineEndScreen(s){
   const ag = m.querySelector("#again"); if (ag) ag.onclick = ()=>netSend({action:"again"});
 }
 
+/* ------------------------------------------------------------------
+   CHALLENGE MODE
+   A timed sprint you send to a friend. The server fixes the question
+   list, so both players get the same questions in the same order, and
+   it keeps the clock and the official score. Harder question types are
+   worth more. Each answer also counts toward your own word progress.
+------------------------------------------------------------------- */
+const CH_KEY = "wordRally.challenges";
+const CH_POINTS = {def:10, context:12, cloze:14, describe:16};
+const WRONG_PAUSE_MS = 2200, RIGHT_PAUSE_MS = 450;
+const CH = { ws:null, pending:new Map(), seq:0, play:null, timer:null, mem:[] };
+function chList(){ try { return JSON.parse(localStorage.getItem(CH_KEY)) || []; } catch (e) { return CH.mem; } }
+function chSave(list){ CH.mem = list.slice(0, 30); try { localStorage.setItem(CH_KEY, JSON.stringify(CH.mem)); } catch (e) {} }
+function chRemember(id, token, role){ chSave([{id, token, role, at:Date.now()}, ...chList().filter(x=>x.id!==id)]); }
+const chToken = id => (chList().find(x=>x.id===id) || {}).token || null;
+function setChallengeParam(id){
+  try { const u = new URL(location.href); id ? u.searchParams.set("challenge", id) : u.searchParams.delete("challenge"); u.searchParams.delete("room"); history.replaceState(null, "", u); } catch (e) {}
+}
+function challengeLink(id){
+  try {
+    const u = new URL(location.href); u.search = ""; u.hash = "";
+    u.searchParams.set("challenge", id);
+    if (PAGE_PARAMS.get("server")) u.searchParams.set("server", PAGE_PARAMS.get("server"));
+    return u.toString();
+  } catch (e) { return id; }
+}
+
+// Request/reply over a WebSocket (the same server as multiplayer).
+function chRequest(msg){
+  return new Promise((resolve, reject)=>{
+    const url = serverUrl();
+    if (!url) return reject(new Error("Challenges need the Word Rally server (see the README)."));
+    const reqId = "c" + (++CH.seq);
+    CH.pending.set(reqId, {resolve, reject});
+    setTimeout(()=>{ if (CH.pending.has(reqId)){ CH.pending.delete(reqId); reject(new Error("The server didn't answer. Check your connection and try again.")); } }, 12000);
+    const send = ()=>{ try { CH.ws.send(JSON.stringify({...msg, reqId})); } catch (e) {} };
+    if (CH.ws && CH.ws.readyState === 1) return send();
+    if (CH.ws && CH.ws.readyState === 0){ CH.ws.addEventListener("open", send, {once:true}); return; }
+    let ws;
+    try { ws = new WebSocket(url); } catch (e) { CH.pending.delete(reqId); return reject(new Error("Couldn't reach the game server.")); }
+    CH.ws = ws;
+    ws.addEventListener("open", send, {once:true});
+    ws.onmessage = e=>{
+      let m; try { m = JSON.parse(e.data); } catch (_) { return; }
+      const p = CH.pending.get(m.reqId); if (!p) return;
+      CH.pending.delete(m.reqId);
+      if (m.type === "error") p.reject(Object.assign(new Error(m.message), {code:m.code})); else p.resolve(m);
+    };
+    ws.onclose = ()=>{
+      if (CH.ws === ws) CH.ws = null;
+      for (const p of CH.pending.values()) p.reject(new Error("Lost the connection to the server. Please try again."));
+      CH.pending.clear();
+    };
+  });
+}
+function chBusy(text){ openModal(`<h2>${esc(text)}</h2><p class="sub">Talking to the game server.</p>`, "", "connecting"); }
+function chFail(err, retry){
+  const m = openModal(`<h2>Something went wrong</h2><p class="sub">${esc(err.message || String(err))}</p>
+    <div class="rowEnd"><button class="btn" id="menu">Menu</button>${retry?`<button class="btn primary" id="retry">Try again</button>`:""}</div>`, "", "challenge");
+  m.querySelector("#menu").onclick = ()=>{ setChallengeParam(null); setupScreen(""); };
+  if (retry) m.querySelector("#retry").onclick = retry;
+}
+function leaveOtherModes(){
+  if (inRoom()) netLeave();
+  if (G && !G.challenge){ G = null; clearBoard(); }
+}
+
+/* ---- create / open ---- */
+async function createChallenge(minutes){
+  leaveOtherModes();
+  chBusy("Creating your challenge…");
+  try {
+    const r = await chRequest({action:"challengeCreate", name:settings.name, minutes});
+    chRemember(r.challenge.id, r.token, "creator");
+    setChallengeParam(r.challenge.id);
+    challengeScreen(r.challenge);
+  } catch (e) { chFail(e, ()=>createChallenge(minutes)); }
+}
+async function openChallenge(id){
+  leaveOtherModes();
+  chBusy("Loading the challenge…");
+  try {
+    const r = await chRequest({action:"challengeGet", id, token:chToken(id)});
+    setChallengeParam(id);
+    challengeScreen(r.challenge);
+  } catch (e) {
+    if (e.code === "no_challenge"){ setChallengeParam(null); setupScreen(""); toast(esc(e.message), "bad"); }
+    else chFail(e, ()=>openChallenge(id));
+  }
+}
+const mins = n => `${n} minute${n===1?"":"s"}`;
+function challengeScreen(ch){
+  const me = ch.you ? ch[ch.you] : null;
+  if (me && me.status === "done") return challengeResults(ch);
+  if (!me && ch.challenger) return challengeResults(ch);          // two players already: show the result
+  let html, needName = false;
+  if (me && me.status === "playing"){
+    html = `<h2>Challenge in progress</h2><p class="sub">Your clock is still running. Pick up where you left off.</p>`;
+  } else if (ch.you === "creator"){
+    html = `<h2>Your ${mins(ch.minutes)} challenge is ready</h2>
+      <p class="sub">You play first. When you're done you'll get a link to send to a friend, who gets exactly the same questions.</p>`;
+  } else {
+    needName = true;
+    const c = ch.creator;
+    html = `<h2>${esc(c.name)} challenged you!</h2>
+      <p class="sub">A ${mins(ch.minutes)} vocabulary sprint, with the same questions ${esc(c.name)} got.</p>
+      <div class="stat"><div><b>${c.status==="done" ? c.score : "—"}</b><span>${c.status==="done" ? "score to beat" : `${esc(c.name)} hasn't played yet`}</span></div>
+      <div><b>${ch.minutes}:00</b><span>on the clock</span></div></div>
+      <div class="field"><label for="chName">Your name</label><input id="chName" maxlength="14" value="${esc(settings.name==="You"?"":settings.name)}" placeholder="Your name"></div>`;
+  }
+  html += `<div class="rules"><b>How scoring works</b><ul>
+      <li>Answer as many as you can before the clock runs out.</li>
+      <li>Points: Definition 10 · In context 12 · Complete the sentence 14 · Name the word 16.</li>
+      <li>A wrong answer shows you the right one for a moment, and that time counts.</li></ul></div>
+    <div class="rowEnd"><button class="btn" id="menu">Menu</button><button class="btn primary" id="startCh">${me && me.status==="playing" ? "Resume" : "Start"}</button></div>`;
+  const m = openModal(html, "", "challenge");
+  m.querySelector("#menu").onclick = ()=>{ setChallengeParam(null); setupScreen(""); };
+  const go = ()=>{
+    if (needName){
+      const n = m.querySelector("#chName").value.trim();
+      if (!n){ toast("Enter your name first.", "bad"); m.querySelector("#chName").focus(); return; }
+      settings.name = n;
+      if (profileKey(n) !== currentProfile) loadProfile(n);
+      saveProgress(); updateFoot();
+    }
+    startChallenge(ch.id);
+  };
+  m.querySelector("#startCh").onclick = go;
+  const ni = m.querySelector("#chName");
+  if (ni){ ni.onkeydown = e=>{ if (e.key==="Enter") go(); }; setTimeout(()=>ni.focus(), 50); }
+}
+async function startChallenge(id){
+  chBusy("Starting…");
+  try {
+    const r = await chRequest({action:"challengeStart", id, token:chToken(id), name:settings.name});
+    chRemember(id, r.token, r.challenge.you);
+    runSprint(r.challenge, r.play, r.token);
+  } catch (e) {
+    if (e.code === "done" || e.code === "full") openChallenge(id);
+    else chFail(e, ()=>startChallenge(id));
+  }
+}
+
+/* ---- the timed sprint ---- */
+function runSprint(ch, play, token){
+  closeModal();
+  const offset = ch.now - Date.now();
+  const P = { id:ch.id, token, minutes:ch.minutes, questions:play.questions, choices:play.choices.slice(),
+              endLocal: play.endsAt - offset, total: ch.minutes*60000, phase:"question", finished:false,
+              score:0, correct:0, lastSent:play.choices.length, picked:null };
+  P.choices.forEach((c,i)=>{ const q = P.questions[i]; if (q && c === q.answer){ P.correct++; P.score += CH_POINTS[q.type]||10; } });
+  CH.play = P;
+  G = { challenge:true, phase:"question" };
+  document.body.classList.add("sprint");
+  clearInterval(CH.timer);
+  CH.timer = setInterval(sprintTick, 200);
+  if (P.choices.length >= P.questions.length || Date.now() >= P.endLocal) return finishSprint();
+  renderQuestion();
+}
+function sprintTick(){
+  const P = CH.play; if (!P || P.finished) return;
+  const left = Math.max(0, P.endLocal - Date.now());
+  const t = document.getElementById("spTime");
+  if (t){ const s = Math.ceil(left/1000); t.textContent = `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`; }
+  const fill = document.getElementById("timerFill");
+  if (fill){ fill.style.width = (100*left/P.total) + "%"; fill.classList.toggle("low", left < 10000); }
+  if (left <= 0) finishSprint();
+}
+function sprintAnswer(i){
+  const P = CH.play;
+  if (!P || P.finished || P.phase !== "question" || modalOpen()) return;
+  const idx = P.choices.length, q = P.questions[idx];
+  const ok = i === q.answer, pts = CH_POINTS[q.type] || 10;
+  P.choices.push(i); P.picked = i; P.phase = "feedback"; G.phase = "feedback";
+  if (ok){ P.correct++; P.score += pts; }
+  const item = WORDS.find(x=>x.w===q.word);
+  if (item){ recordAnswer(item, ok, Math.max(0, STAGES.findIndex(t=>t.key===q.type))); saveProgress(); }
+  renderQuestion();
+  if (P.choices.length - P.lastSent >= 3){           // save progress so a closed tab doesn't lose it
+    P.lastSent = P.choices.length;
+    chRequest({action:"challengeProgress", id:P.id, token:P.token, choices:P.choices}).catch(()=>{});
+  }
+  setTimeout(()=>{
+    if (P.finished || CH.play !== P) return;
+    if (P.choices.length >= P.questions.length) return finishSprint();
+    P.phase = "question"; G.phase = "question"; P.picked = null;
+    renderQuestion();
+  }, ok ? RIGHT_PAUSE_MS : WRONG_PAUSE_MS);
+}
+async function finishSprint(){
+  const P = CH.play; if (!P || P.finished) return;
+  P.finished = true; P.phase = "done"; G.phase = "done";
+  clearInterval(CH.timer);
+  renderQuestion();
+  const submit = async ()=>{
+    chBusy("Sending your score…");
+    try {
+      const r = await chRequest({action:"challengeFinish", id:P.id, token:P.token, choices:P.choices});
+      challengeResults(r.challenge);
+    } catch (e) { chFail(e, submit); }
+  };
+  await submit();
+}
+function renderSprint(){
+  const el = document.getElementById("qcard");
+  const P = CH.play;
+  if (!P){ el.innerHTML = ""; return; }
+  const answered = P.choices.length;
+  const head = `<div class="sprintBar">
+      <div><b id="spScore">${P.score}</b><span>points</span></div>
+      <div><b>${P.correct}/${answered}</b><span>correct</span></div>
+      <div><b id="spTime">–:––</b><span>left</span></div>
+    </div>
+    <div class="timer"><span id="timerFill"></span></div>`;
+  if (P.phase === "done"){
+    el.innerHTML = head + `<div class="reveal"><div class="cd">${P.score}</div><div>Time! ${P.correct} of ${answered} correct.</div></div>`;
+    sprintTick(); return;
+  }
+  const idx = P.phase === "feedback" ? answered - 1 : answered;
+  const q = P.questions[idx];
+  const keys = ["A","B","C","D"];
+  let stem;
+  if (q.type === "def") stem = `<span class="big">${esc(q.word)}</span>most nearly means…`;
+  else if (q.type === "context") stem = `<blockquote>${highlight(q.sentence, q.word)}</blockquote>As used in the sentence, <b>${esc(q.word)}</b> most nearly means…`;
+  else if (q.type === "cloze") stem = `<blockquote>${esc(q.sentence).replace("___",'<span class="blank"></span>')}</blockquote>Which word best completes the sentence?`;
+  else stem = esc(q.prompt);
+  const fb = P.phase === "feedback";
+  const ok = fb && P.picked === q.answer;
+  const item = WORDS.find(x=>x.w===q.word);
+  let html = head + `<div class="qmeta"><span class="chip">${TYPE_LABEL[q.type]} · ${CH_POINTS[q.type]} pts</span>
+      ${fb ? `<span class="chip ${ok?"":"review"}" style="${ok?"color:var(--good)":""}">${ok ? "+"+CH_POINTS[q.type] : "Not quite"}</span>` : ""}
+      <span class="secsLeft">Question ${idx+1}</span></div>
+    <div class="stem">${stem}</div>
+    <div class="opts">${q.options.map((o,i)=>{
+      const cls = fb ? (i===q.answer ? "right" : i===P.picked ? "wrong" : "dim") : "";
+      return `<button class="opt ${cls}" data-i="${i}" ${fb?"disabled":""}><span class="k">${keys[i]}</span><span>${esc(o)}</span></button>`;
+    }).join("")}</div>`;
+  if (fb && !ok && item) html += `<div class="feedback no"><p><b>${item.w}</b> <i>${POS_ABBR[item.pos]||""}</i> — ${esc(item.def)}</p></div>`;
+  el.innerHTML = html;
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>sprintAnswer(+b.dataset.i));
+  sprintTick();
+}
+function endSprintView(){
+  clearInterval(CH.timer); CH.play = null;
+  document.body.classList.remove("sprint");
+  if (G && G.challenge){ G = null; clearBoard(); }
+}
+
+/* ---- results ---- */
+function challengeResults(ch){
+  const role = ch.you, me = role ? ch[role] : null;
+  const oppRole = role === "creator" ? "challenger" : "creator";
+  const opp = role ? ch[oppRole] : null;
+  const row = (s, label) => s ? `<div><b>${s.status==="done" ? s.score : "—"}</b><span>${esc(s.name)}${label}${s.status==="done" ? ` · ${s.correct}/${s.answered} correct` : s.status==="playing" ? " · playing now" : " · not played yet"}</span></div>` : "";
+  let title;
+  if (ch.result){
+    const w = ch.result.winner;
+    title = w === "tie" ? "It's a tie!" : (w === role ? "\u{1F3C6} You win!" : `\u{1F3C6} ${esc(ch[w].name)} wins!`);
+  } else if (me) {
+    title = `You scored ${me.score}`;
+  } else title = "Challenge";
+  const waiting = !ch.result && me && (opp ? `${esc(opp.name)} hasn't finished yet. Check back later; this page shows the result once they're done.` : "");
+  const link = challengeLink(ch.id);
+  const showShare = role === "creator" && !ch.challenger;
+  const m = openModal(`
+    <h2>${title}</h2>
+    <p class="sub">${mins(ch.minutes)} · same questions for both players</p>
+    <div class="stat">${role ? row(me, " (you)") + (opp ? row(opp, "") : `<div><b>—</b><span>waiting for a friend</span></div>`) : row(ch.creator,"") + row(ch.challenger,"")}</div>
+    ${showShare ? `<p><b>Send this link to a friend.</b> They'll see your score and get the same questions.</p>
+      <div class="joinRow"><input id="chLink" readonly value="${esc(link)}"><button class="btn" id="copyCh">Copy</button>${navigator.share ? `<button class="btn" id="shareCh">Share</button>` : ""}</div>
+      <p class="sub" style="font-size:13px;margin-top:8px">Open the same link later (or find it under Challenge in the menu) to see who won.</p>` : ""}
+    ${waiting ? `<p class="sub">${waiting}</p>` : ""}
+    <div class="rowEnd">
+      ${!ch.result && role ? `<button class="btn" id="refresh">Check again</button>` : ""}
+      <button class="btn" id="menu">Menu</button>
+      <button class="btn primary" id="again">New challenge</button>
+    </div>`, "", "challenge");
+  const copy = m.querySelector("#copyCh");
+  if (copy) copy.onclick = ()=>{
+    (navigator.clipboard ? navigator.clipboard.writeText(link) : Promise.reject())
+      .then(()=>toast("Link copied.", "good")).catch(()=>{ m.querySelector("#chLink").select(); toast("Select the link and copy it.", "info"); });
+  };
+  const sh = m.querySelector("#shareCh");
+  if (sh) sh.onclick = ()=>navigator.share({title:"Word Rally challenge", text:`I scored ${me ? me.score : ""} in a ${mins(ch.minutes)} Word Rally vocab sprint. Can you beat it?`, url:link}).catch(()=>{});
+  const rf = m.querySelector("#refresh"); if (rf) rf.onclick = ()=>openChallenge(ch.id);
+  m.querySelector("#menu").onclick = ()=>{ endSprintView(); setChallengeParam(null); setupScreen(""); };
+  m.querySelector("#again").onclick = ()=>{ endSprintView(); setChallengeParam(null); settings.mode = "challenge"; setupScreen(""); };
+}
+
+/* ---- "Your challenges" list in the menu ---- */
+async function fillChallengeList(listEl){
+  const items = chList().slice(0, 8);
+  if (!items.length){ listEl.innerHTML = `<li class="empty">None yet.</li>`; return; }
+  listEl.innerHTML = items.map(x=>`<li data-id="${x.id}"><span class="sp">Loading…</span></li>`).join("");
+  await Promise.all(items.map(async x=>{
+    let text, li = listEl.querySelector(`li[data-id="${x.id}"]`);
+    try {
+      const r = await chRequest({action:"challengeGet", id:x.id, token:x.token});
+      const ch = r.challenge, role = ch.you, me = role && ch[role], opp = role && ch[role==="creator"?"challenger":"creator"];
+      const vs = opp ? `vs ${esc(opp.name)}` : "no opponent yet";
+      let status;
+      if (ch.result) status = ch.result.winner === "tie" ? `Tie, ${me.score}–${opp.score}` : (ch.result.winner === role ? `Won ${me.score}–${opp.score}` : `Lost ${me.score}–${opp.score}`);
+      else if (me && me.status !== "done") status = me.status === "playing" ? "In progress" : "Ready to play";
+      else status = opp ? `Waiting for ${esc(opp.name)}` : "Waiting for a friend";
+      text = `<b>${mins(ch.minutes)}</b> ${vs}<span class="sp"></span><span class="tag">${status}</span>`;
+    } catch (e) {
+      if (e.code === "no_challenge"){ chSave(chList().filter(y=>y.id!==x.id)); if (li) li.remove(); return; }
+      text = `<span class="sp">Couldn't load</span>`;
+    }
+    li = listEl.querySelector(`li[data-id="${x.id}"]`);
+    if (li){ li.innerHTML = text; li.onclick = ()=>openChallenge(x.id); }
+  }));
+  if (!listEl.children.length) listEl.innerHTML = `<li class="empty">None yet.</li>`;
+}
+
 function updateFoot(){
   document.getElementById("foot").textContent = `Word Rally \u00B7 ${WORDS.length} SAT words${WORD_SOURCE?" (from "+WORD_SOURCE+")":""} \u00B7 ${STORAGE_OK ? `progress saved in this browser for ${settings.name}` : "progress lasts until you close the page"}`;
 }
@@ -1459,7 +1808,10 @@ let WORD_SOURCE = "";
 updateFoot();
 // Back in a room after a reload? Rejoin it. Otherwise open the menu (a ?room=CODE link pre-fills the code).
 NET.session = sessLoad();
-if (NET.session && serverUrl()){
+if (PAGE_PARAMS.get("challenge") && serverUrl()){
+  NET.session = null;
+  openChallenge(PAGE_PARAMS.get("challenge").toLowerCase());
+} else if (NET.session && serverUrl()){
   openModal(`<h2>Reconnecting…</h2><p class="sub">Rejoining room ${esc(NET.session.code)}.</p>`, "", "connecting");
   netOpen(null);
 } else {
