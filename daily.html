@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Word Rally Daily</title>
+<meta name="description" content="Twenty questions a day, the same for everyone in a subject. Keep your streak and beat your friends.">
+<style>
+:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface2:#faf9f6; --ink:#1c1b18; --muted:#6a665d; --line:#e2ddd2;
+  --accent:#2f62e0; --accentInk:#ffffff; --good:#1d8049; --goodBg:#e6f4ec; --bad:#c03a26; --badBg:#fbe9e5;
+  --gold:#b7800f; --track:#ece8df; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --surface:#1d1e24; --surface2:#24252c; --ink:#ebeae5; --muted:#9b988f; --line:#33343c;
+    --accent:#6b93ff; --accentInk:#0d1020; --good:#4cc47f; --goodBg:#16301f; --bad:#ff7a63; --badBg:#3a1c17;
+    --gold:#e2b04a; --track:#26272e; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --surface:#1d1e24; --surface2:#24252c; --ink:#ebeae5; --muted:#9b988f; --line:#33343c;
+  --accent:#6b93ff; --accentInk:#0d1020; --good:#4cc47f; --goodBg:#16301f; --bad:#ff7a63; --badBg:#3a1c17;
+  --gold:#e2b04a; --track:#26272e; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+.dayTag{font-size:12px;font-weight:700;color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));border-radius:999px;padding:2px 9px}
+header .sp{flex:1}
+.reset{font-size:13px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);color:var(--accentInk);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.small{padding:5px 10px;font-size:13px}
+.btn.quiet{background:transparent;border-color:transparent;color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:default}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px}
+h1{font-size:26px;letter-spacing:-.02em;margin:0 0 4px}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 10px}
+.sub{color:var(--muted);margin:0 0 14px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row input,.row select{flex:1;min-width:0;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface2)}
+.row select{flex:0 1 auto}
+[hidden]{display:none!important}
+
+/* Subjects */
+.subjects{display:grid;gap:10px}
+.subj{display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface2)}
+.subj .nm{font-weight:800}
+.subj .meta{font-size:13px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.subj .act{grid-row:1 / span 2;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.subj.done{border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.flame{font-weight:800;color:var(--gold)}
+.flame.out{color:var(--muted);font-weight:600}
+.risk{color:var(--bad);font-weight:600}
+.score{font-weight:800;font-size:18px}
+
+/* Groups and boards */
+.groups{list-style:none;margin:0 0 14px;padding:0}
+.groups li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.groups li .sp{flex:1}
+.tag{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 6px;white-space:nowrap}
+table.board{width:100%;border-collapse:collapse;font-size:15px}
+.board th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:6px 6px;border-bottom:1px solid var(--line)}
+.board td{padding:8px 6px;border-bottom:1px solid var(--line)}
+.board td.n{text-align:right;font-variant-numeric:tabular-nums}
+.board th.n{text-align:right}
+.board tr.you td{background:color-mix(in srgb,var(--accent) 8%,transparent);font-weight:700}
+.board .rank{width:28px;color:var(--muted);font-weight:700}
+.tabs{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.tabs button{border:0;background:transparent;padding:6px 12px;font-size:13px;font-weight:700;color:var(--muted)}
+.tabs button.on{background:var(--accent);color:var(--accentInk)}
+.invite{display:flex;gap:8px;align-items:center;background:var(--surface2);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+.invite code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+
+/* Play */
+.qhead{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.chip{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.chip.again{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+.qhead .sp{flex:1}
+.qhead .sc{font-weight:800;font-variant-numeric:tabular-nums}
+.progress{display:flex;gap:3px;margin-bottom:14px}
+.progress i{flex:1;height:6px;border-radius:3px;background:var(--track)}
+.progress i.past{background:var(--muted);opacity:.5}
+.progress i.ok{background:var(--good)} .progress i.no{background:var(--bad)} .progress i.cur{background:var(--accent)}
+.clock{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;color:var(--muted)}
+.bar{flex:1;height:8px;border-radius:4px;background:var(--track);overflow:hidden}
+.bar b{display:block;height:100%;width:100%;background:var(--good);border-radius:4px;transform-origin:left;transition:background .3s}
+.bar b.mid{background:var(--gold)} .bar b.low{background:var(--bad)}
+.clock .val{min-width:58px;text-align:right;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.stem{font-size:19px;line-height:1.5;margin:4px 0 16px}
+.stem .big{font-size:30px;font-weight:800;letter-spacing:-.01em;display:block;margin-bottom:2px}
+.stem blockquote{margin:0 0 12px;padding:12px 16px;border-left:4px solid var(--accent);background:var(--surface2);border-radius:0 10px 10px 0;font-size:18px}
+.stem mark{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inherit;border-radius:4px;padding:0 3px;font-weight:700}
+.blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--ink);margin:0 2px}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;font-size:16px;transition:border-color .12s,background .12s,transform .08s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.pending{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.opt.right{border-color:var(--good);background:var(--goodBg)}
+.opt.right .k{background:var(--good);color:#fff;border-color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--badBg)}
+.opt.wrong .k{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt.dim{opacity:.5}
+.feedback{margin-top:14px;border-radius:12px;padding:12px 16px;border:1px solid var(--line);background:var(--surface2)}
+.feedback h4{margin:0 0 4px;font-size:16px}
+.feedback.ok h4{color:var(--good)} .feedback.no h4{color:var(--bad)}
+.feedback p{margin:4px 0}
+.feedback .ex{color:var(--muted);font-style:italic}
+.feedback .corr{font-size:14px;margin-top:8px;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.waiting{color:var(--muted);text-align:center;padding:50px 0;font-weight:600}
+
+/* Results */
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px}
+.big3 div{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center}
+.big3 b{display:block;font-size:26px;letter-spacing:-.02em}
+.big3 span{font-size:12px;color:var(--muted)}
+.review{list-style:none;margin:0;padding:0}
+.review li{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.review li b{margin-right:0}
+.review .x{color:var(--bad);font-weight:800;margin-right:6px}
+.banner{border-radius:12px;padding:10px 14px;margin:0 0 12px;background:color-mix(in srgb,var(--gold) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 35%,var(--line))}
+.err{background:var(--badBg);color:var(--bad);border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:14px}
+.how{font-size:14px;color:var(--muted)}
+.how p{margin:6px 0}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin:18px 0 6px}
+.toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);font-size:14px;font-weight:600;z-index:50;max-width:calc(100% - 24px)}
+@media (max-width:520px){
+  .wrap{padding:12px}
+  .panel{padding:14px 14px}
+  .stem{font-size:17px} .stem .big{font-size:26px} .stem blockquote{font-size:16px}
+  .board .hideSm{display:none}
+  .subj{grid-template-columns:1fr}
+  .subj .act{grid-row:auto;grid-column:1;flex-direction:row;align-items:center;justify-content:space-between}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="daily.html">Word<span>Rally</span></a>
+    <span class="dayTag">Daily</span>
+    <div class="sp"></div>
+    <span class="reset" id="reset"></span>
+    <a class="btn small" href="index.html" id="practiceLink">Practice</a>
+  </header>
+  <main id="main"><div class="waiting">Connecting&hellip;</div></main>
+  <div class="foot">A new set every day at midnight US Central time &middot; Same 20 questions for everyone in a subject</div>
+</div>
+<script>
+"use strict";
+/* ------------------------------------------------------------------
+   Word Rally Daily
+   The server builds one set of 20 questions per subject per day, sends
+   them one at a time, scores each answer for correctness and speed, and
+   keeps streaks and group boards. This page only displays.
+------------------------------------------------------------------- */
+// Same server as Word Rally. A ?server=... parameter overrides it (local testing).
+const SERVER_URL = "wss://2owywo7buf.execute-api.us-east-1.amazonaws.com/prod";
+const PARAMS = new URLSearchParams(location.search);
+const serverUrl = () => PARAMS.get("server") || SERVER_URL;
+
+const SUBJECTS = {
+  sat:   { title:"SAT Vocabulary", short:"SAT", noun:"word",
+           labels:{def:"Definition", context:"In context", cloze:"Complete the sentence", describe:"Name the word"},
+           defQ:"most nearly means…", ctxQ:w=>`As used in the sentence, <b>${w}</b> most nearly means…`, clozeQ:"Which word best completes the sentence?" },
+  bio2b: { title:"AP Bio · Unit 2B: Membranes & Transport", short:"Bio 2B", noun:"term",
+           labels:{def:"Definition", context:"In context", cloze:"Complete the statement", describe:"Apply it"},
+           defQ:"is best described as…", ctxQ:w=>`In this statement, <b>${w}</b> refers to…`, clozeQ:"Which term best completes the statement?" },
+  bio3:  { title:"AP Bio · Unit 3: Cellular Energetics", short:"Bio 3", noun:"term",
+           labels:{def:"Definition", context:"In context", cloze:"Complete the statement", describe:"Apply it"},
+           defQ:"is best described as…", ctxQ:w=>`In this statement, <b>${w}</b> refers to…`, clozeQ:"Which term best completes the statement?" },
+};
+const TYPES = ["def","context","cloze","describe"];
+
+/* ---------------------------------------------------------------- helpers */
+const $ = s => document.querySelector(s);
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function stemOf(w){ return w.length>4 && /[ey]$/.test(w) ? w.slice(0,-1) : w; }
+function highlight(sentence, w){
+  const html = esc(sentence);
+  if (/[\s+\-\/]/.test(w) || /[A-Z0-9]/.test(w)){
+    const ew = esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp("(^|[^A-Za-z0-9])(" + ew + "(?:e?s)?)(?![A-Za-z0-9])", "i");
+    if (re.test(html)) return html.replace(re, (m, pre, t) => pre + "<mark>" + t + "</mark>");
+  }
+  const st = stemOf(w).toLowerCase();
+  let best = null;
+  html.replace(/[A-Za-zÀ-ÿ'-]+/g, (tok, off) => {
+    if (tok.toLowerCase().startsWith(st)){ const d = Math.abs(tok.length - w.length); if (!best || d < best.d) best = {tok, off, d}; }
+    return tok;
+  });
+  return best ? html.slice(0,best.off) + "<mark>" + best.tok + "</mark>" + html.slice(best.off + best.tok.length) : html;
+}
+function stemHTML(subject, q){
+  const S = SUBJECTS[subject];
+  if (q.type === "def") return `<span class="big">${esc(q.word)}</span>${S.defQ}`;
+  if (q.type === "context") return `<blockquote>${highlight(q.sentence, q.word)}</blockquote>${S.ctxQ(esc(q.word))}`;
+  if (q.type === "cloze") return `<blockquote>${esc(q.sentence).replace("___",'<span class="blank"></span>')}</blockquote>${S.clozeQ}`;
+  return esc(q.prompt);
+}
+function toast(text){
+  const t = document.createElement("div"); t.className = "toast"; t.textContent = text;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+function copy(text){
+  const done = () => toast("Copied");
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => prompt("Copy this link:", text));
+  else prompt("Copy this link:", text);
+}
+function pageLink(params){
+  const u = new URL(location.href); u.search = ""; u.hash = "";
+  for (const [k, v] of Object.entries(params)) u.searchParams.set(k, v);
+  if (PARAMS.get("server")) u.searchParams.set("server", PARAMS.get("server"));
+  return u.toString();
+}
+function clearParams(...names){
+  try { const u = new URL(location.href); names.forEach(n => u.searchParams.delete(n)); history.replaceState(null, "", u); } catch (e) {}
+}
+const fmtDate = d => new Date(d + "T12:00:00Z").toLocaleDateString(undefined, { weekday:"long", month:"long", day:"numeric", timeZone:"UTC" });
+const fmtSecs = ms => (ms / 1000).toFixed(1) + "s";
+const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+
+/* ---------------------------------------------------------------- identity (this browser) */
+// The server identifies a player by an id and a secret it issued; the page keeps both here.
+// The recovery link carries them to another device.
+const ME_KEY = "wordRally.daily";
+function meRead(){ try { return JSON.parse(localStorage.getItem(ME_KEY)) || null; } catch (e) { return null; } }
+function meWrite(v){ try { v ? localStorage.setItem(ME_KEY, JSON.stringify(v)) : localStorage.removeItem(ME_KEY); } catch (e) {} }
+let ME = meRead();
+const creds = () => ({ playerId: ME.playerId, secret: ME.secret });
+
+/* ---------------------------------------------------------------- practice progress
+   Each Daily answer also counts in Word Rally's own practice history for this player
+   name and subject (same browser, same rules as practice): a right answer checks off
+   that question type and the easier ones, a miss un-checks it and the harder ones. */
+const STORE_KEY = "wordRally.v1";
+function recordPractice(subject, word, type, ok){
+  try {
+    const store = JSON.parse(localStorage.getItem(STORE_KEY)) || {};
+    const key = ME.name.trim().toLowerCase() + (subject === "sat" ? "" : "@" + subject);
+    store.profiles = store.profiles || {};
+    const prof = store.profiles[key] || (store.profiles[key] = { name: ME.name, stats: {} });
+    prof.stats = prof.stats || {};
+    const s = prof.stats[word] || (prof.stats[word] = { seen:0, right:0, wrong:0, runRight:0, hist:[], done:[0,0,0,0] });
+    if (!Array.isArray(s.done)){ const k = Math.min(4, s.stage || 0); s.done = [0,1,2,3].map(i => i < k ? 1 : 0); delete s.stage; }
+    s.hist = s.hist || [];
+    const f = Math.max(0, TYPES.indexOf(type));
+    s.seen++; s.hist.push(ok ? 1 : 0); if (s.hist.length > 20) s.hist.shift();
+    if (ok){ s.right++; s.runRight++; for (let i = 0; i <= f; i++) s.done[i] = 1; }
+    else   { s.wrong++; s.runRight = 0; for (let i = f; i < 4; i++) s.done[i] = 0; }
+    prof.updated = Date.now();
+    localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  } catch (e) {}
+}
+const practiceHref = subject => "index.html?" + new URLSearchParams({ deck: subject, player: ME ? ME.name : "" });
+
+/* ---------------------------------------------------------------- connection
+   One WebSocket; every request carries a reqId and resolves with the reply that echoes it.
+   If the socket drops, the next request reconnects. */
+const NET = { ws: null, opening: null, seq: 0, waiting: new Map() };
+function connect(){
+  if (NET.ws && NET.ws.readyState === 1) return Promise.resolve(NET.ws);
+  if (NET.opening) return NET.opening;
+  NET.opening = new Promise((resolve, reject) => {
+    let ws;
+    try { ws = new WebSocket(serverUrl()); } catch (e) { NET.opening = null; return reject(new Error("Could not reach the game server.")); }
+    const fail = setTimeout(() => { ws.close(); }, 10000);
+    ws.onopen = () => { clearTimeout(fail); NET.ws = ws; NET.opening = null; resolve(ws); };
+    ws.onclose = () => {
+      clearTimeout(fail);
+      if (NET.opening) { NET.opening = null; reject(new Error("Could not reach the game server.")); }
+      if (NET.ws === ws) NET.ws = null;
+      for (const [, w] of NET.waiting) w.reject(new Error("Connection lost."));
+      NET.waiting.clear();
+    };
+    ws.onmessage = ev => {
+      let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+      if (m.now) NET.offset = m.now - Date.now();
+      const w = m.reqId && NET.waiting.get(m.reqId);
+      if (!w) return;
+      NET.waiting.delete(m.reqId); clearTimeout(w.timer);
+      if (m.type === "error") { const e = new Error(m.message); e.code = m.code; w.reject(e); } else w.resolve(m);
+    };
+  });
+  return NET.opening;
+}
+async function request(msg, { retries = 2 } = {}){
+  for (let attempt = 0; ; attempt++){
+    try {
+      const ws = await connect();
+      const reqId = "d" + (++NET.seq);
+      return await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => { NET.waiting.delete(reqId); reject(new Error("The server took too long to answer.")); }, 12000);
+        NET.waiting.set(reqId, { resolve, reject, timer });
+        ws.send(JSON.stringify({ ...msg, reqId }));
+      });
+    } catch (e) {
+      if (e.code || attempt >= retries) throw e;          // a game error is final; network trouble is retried
+      await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
+    }
+  }
+}
+setInterval(() => { if (NET.ws && NET.ws.readyState === 1) NET.ws.send(JSON.stringify({ action: "ping" })); }, 240000);
+
+/* ---------------------------------------------------------------- reset countdown */
+let RESET_AT = 0, TODAY = "";
+function noteServer(m){
+  if (m.msToReset) RESET_AT = Date.now() + m.msToReset;
+  if (m.today) TODAY = m.today;
+}
+setInterval(() => {
+  if (!RESET_AT) return;
+  const left = RESET_AT - Date.now();
+  if (left <= 0) { $("#reset").textContent = "New set ready"; return; }
+  const h = Math.floor(left / 3600000), mn = Math.floor(left / 60000) % 60;
+  $("#reset").textContent = `New set in ${h ? h + "h " : ""}${mn}m`;
+}, 1000);
+
+/* ---------------------------------------------------------------- views */
+const main = () => $("#main");
+let VIEW = null;
+function show(html){ main().innerHTML = html; window.scrollTo(0, 0); }
+function showError(e){ return `<div class="err">${esc(e.message || e)}</div>`; }
+
+// Register (first visit, or after "start over").
+function viewRegister(invite, error){
+  VIEW = "register";
+  show(`
+    <div class="panel">
+      <h1>Word Rally Daily</h1>
+      <p class="sub">Twenty questions a day. Everyone in a subject gets the same twenty, so you can compare scores with your friends. Play every day to build a streak.</p>
+      ${invite ? `<div class="banner">You've been invited to join <b>${esc(invite.name)}</b> (${esc(SUBJECTS[invite.subject]?.title || invite.subject)})${invite.ownerName ? " by " + esc(invite.ownerName) : ""}. Pick a name to join.</div>` : ""}
+      ${error ? showError(error) : ""}
+      <div class="row">
+        <input id="name" maxlength="20" placeholder="Your name (what friends will see)" autocomplete="nickname">
+        <button class="btn primary" id="go">Start</button>
+      </div>
+      <p class="small muted" style="margin-top:12px">No account or password. This browser remembers you, and you'll get a private link to use on other devices.</p>
+    </div>
+    ${howItWorks()}`);
+  const go = async () => {
+    const name = $("#name").value.trim();
+    if (!name) return $("#name").focus();
+    $("#go").disabled = true;
+    try {
+      const r = await request({ action: "dailyRegister", name });
+      noteServer(r);
+      ME = { playerId: r.player.id, secret: r.secret, name: r.player.name };
+      meWrite(ME);
+      if (invite) { await request({ action: "dailyGroupJoin", groupId: invite.id, ...creds() }); clearParams("group"); return viewBoard(invite.id); }
+      viewHome();
+    } catch (e) { viewRegister(invite, e); }
+  };
+  $("#go").onclick = go;
+  $("#name").onkeydown = e => { if (e.key === "Enter") go(); };
+  $("#name").focus();
+}
+
+function howItWorks(){
+  return `<div class="panel how">
+    <h3>How it works</h3>
+    <p><b>Every day at midnight Central</b>, each subject gets a new set of 20: fifteen ${"words or terms"} you haven't had in this cycle and five that lots of players missed recently.</p>
+    <p><b>Questions get harder as you go:</b> definitions first, then in context, then complete the statement, then apply it. Harder questions are worth more (10, 12, 14, 16).</p>
+    <p><b>Speed counts, gently.</b> Each question gives you a few seconds to read at full value, then its value drops slowly: one second is a little better than two, but stopping to look a word up costs most of a question.</p>
+    <p><b>Streaks:</b> finish a set every day to keep your streak for that subject. Every 7 days in a row earns a freeze (hold up to 2), which covers a missed day.</p>
+    <p><b>Groups</b> are for one subject. Make one and share the link; everyone in it sees each other's scores for today and the week.</p>
+  </div>`;
+}
+
+// Home: subjects with streaks and today's status, your groups, and the recovery link.
+async function viewHome(){
+  VIEW = "home";
+  let r;
+  try { r = await request({ action: "dailyMe", ...creds() }); }
+  catch (e) { return handleAuthError(e); }
+  noteServer(r);
+  ME.name = r.player.name; meWrite(ME);
+  const subj = Object.keys(SUBJECTS).filter(s => r.subjects.includes(s)).map(s => {
+    const st = r.player.streaks[s] || {}, p = r.played[s];
+    const status = !p ? `<button class="btn primary" data-play="${s}">Play today's 20</button>`
+      : !p.done ? `<button class="btn primary" data-play="${s}">Resume (${p.answered}/20)</button>`
+      : `<span class="score">${p.score}</span><span class="small muted">${p.correct}/20 right</span>`;
+    const streak = st.current ? `<span class="flame">\u{1F525} ${plural(st.current, "day")}</span>` : `<span class="flame out">No streak yet</span>`;
+    const risk = st.current && st.atRisk ? (st.freezesNeeded ? `<span class="risk">Play today: a freeze covers the missed day</span>` : `<span class="risk">Play today to keep it</span>`) : "";
+    return `<div class="subj ${p && p.done ? "done" : ""}">
+      <div class="nm">${esc(SUBJECTS[s].title)}</div>
+      <div class="act">${status}</div>
+      <div class="meta">${streak}${st.freezes ? `<span title="Each freeze covers one missed day">❄️ ${plural(st.freezes, "freeze")}</span>` : ""}${st.best > 1 ? `<span>Best ${st.best}</span>` : ""}${risk}<a href="${practiceHref(s)}">Practice</a></div>
+    </div>`;
+  }).join("");
+  const groups = r.groups.length ? `<ul class="groups">${r.groups.map(g => `
+      <li><span class="tag">${esc(SUBJECTS[g.subject]?.short || g.subject)}</span><b>${esc(g.name)}</b><span class="sp"></span>
+      <span class="small muted">${plural(g.members, "member")}</span><button class="btn small" data-board="${g.id}">Scores</button></li>`).join("")}</ul>`
+    : `<p class="muted small">You're not in any groups yet. Make one and send the link to friends, or open a link a friend sent you.</p>`;
+  show(`
+    <div class="panel">
+      <h1>Hi, ${esc(r.player.name)}</h1>
+      <p class="sub">${fmtDate(r.today)}</p>
+      <div class="subjects">${subj}</div>
+    </div>
+    <div class="panel">
+      <h3>Your groups</h3>
+      ${groups}
+      <div class="row">
+        <input id="gname" maxlength="20" placeholder="New group name">
+        <select id="gsubj">${Object.entries(SUBJECTS).map(([k, v]) => `<option value="${k}">${esc(v.short)}</option>`).join("")}</select>
+        <button class="btn" id="gmake">Create group</button>
+      </div>
+      <p class="small muted" style="margin:8px 0 0">A group is for one subject. You'll get a link to send.</p>
+    </div>
+    <div class="panel">
+      <h3>Your link for other devices</h3>
+      <p class="small muted" style="margin-top:0">Open this on your phone or another computer to play as ${esc(r.player.name)} there. Keep it to yourself: anyone with it can play as you.</p>
+      <div class="invite"><code>${esc(recoveryLink())}</code><button class="btn small" id="copyMe">Copy</button></div>
+      <button class="btn quiet small" id="forget">Not ${esc(r.player.name)}? Start over on this browser</button>
+    </div>
+    ${howItWorks()}`);
+  main().querySelectorAll("[data-play]").forEach(b => b.onclick = () => viewPlay(b.dataset.play));
+  main().querySelectorAll("[data-board]").forEach(b => b.onclick = () => viewBoard(b.dataset.board));
+  $("#copyMe").onclick = () => copy(recoveryLink());
+  $("#forget").onclick = () => {
+    if (!confirm("Forget this player on this browser? Without your link you won't be able to get back to this streak.")) return;
+    meWrite(null); ME = null; viewRegister();
+  };
+  $("#gmake").onclick = async () => {
+    const name = $("#gname").value.trim();
+    if (!name) return $("#gname").focus();
+    $("#gmake").disabled = true;
+    try { const g = await request({ action: "dailyGroupCreate", name, subject: $("#gsubj").value, ...creds() }); viewBoard(g.group.id, true); }
+    catch (e) { toast(e.message); $("#gmake").disabled = false; }
+  };
+}
+const recoveryLink = () => pageLink({ login: ME.playerId + "." + ME.secret });
+
+function handleAuthError(e){
+  if (e.code === "bad_player"){ meWrite(null); ME = null; return viewRegister(null, e); }
+  show(`<div class="panel">${showError(e)}<button class="btn" id="retry">Try again</button></div>`);
+  $("#retry").onclick = () => viewHome();
+}
+
+// A group's board: today's scores (visible before you play) and this week's totals.
+async function viewBoard(groupId, justMade){
+  VIEW = "board";
+  let r;
+  try { r = await request({ action: "dailyBoard", groupId, ...creds() }); }
+  catch (e) {
+    if (e.code === "not_member") return viewInvite(groupId);
+    if (e.code === "no_group") { toast(e.message); return viewHome(); }
+    return handleAuthError(e);
+  }
+  noteServer(r);
+  const g = r.group, S = SUBJECTS[g.subject];
+  const mine = r.rows.find(x => x.you);
+  let tab = "today";
+  const link = pageLink({ group: g.id });
+  const render = () => {
+    const rows = [...r.rows].sort(tab === "today"
+      ? (a, b) => (b.today?.done ? 1 : 0) - (a.today?.done ? 1 : 0) || (b.today?.score ?? -1) - (a.today?.score ?? -1) || (a.today?.totalMs ?? 0) - (b.today?.totalMs ?? 0)
+      : (a, b) => b.week.total - a.week.total || b.week.daysPlayed - a.week.daysPlayed);
+    let rank = 0;
+    const body = rows.map(x => {
+      const t = x.today;
+      const played = tab === "today" ? !!(t && t.done) : x.week.daysPlayed > 0;
+      if (played) rank++;
+      const cells = tab === "today"
+        ? `<td class="n">${t ? (t.done ? `<b>${t.score}</b>` : `<span class="muted">playing</span>`) : `<span class="muted">not yet</span>`}</td>
+           <td class="n hideSm">${t && t.done ? t.correct + "/20" : ""}</td>`
+        : `<td class="n"><b>${x.week.total}</b></td><td class="n hideSm">${plural(x.week.daysPlayed, "day")}</td>`;
+      const streak = x.streak.current ? `\u{1F525} ${x.streak.current}` : "";
+      return `<tr class="${x.you ? "you" : ""}"><td class="rank">${played ? rank : ""}</td><td>${esc(x.name)}${x.you ? " (you)" : ""}</td><td class="n">${streak}</td>${cells}</tr>`;
+    }).join("");
+    const myToday = mine.today;
+    show(`
+      <div class="panel">
+        <div class="row" style="justify-content:space-between"><button class="btn quiet small" id="back">← Home</button><span class="tag">${esc(S.title)}</span></div>
+        <h1 style="margin-top:6px">${esc(g.name)}</h1>
+        <p class="sub">${plural(g.members, "member")} &middot; ${fmtDate(r.today)}</p>
+        ${justMade ? `<div class="banner">Group created. Send this link to friends so they can join.</div>` : ""}
+        <div class="invite"><code>${esc(link)}</code><button class="btn small" id="copyLink">Copy invite link</button></div>
+        ${!myToday ? `<p><button class="btn primary" id="play">Play today's 20</button></p>` : !myToday.done ? `<p><button class="btn primary" id="play">Resume (${myToday.answered}/20)</button></p>` : ""}
+        <div class="tabs"><button data-tab="today" class="${tab === "today" ? "on" : ""}">Today</button><button data-tab="week" class="${tab === "week" ? "on" : ""}">This week</button></div>
+        <table class="board"><thead><tr><th></th><th>Player</th><th class="n">Streak</th>${tab === "today" ? `<th class="n">Score</th><th class="n hideSm">Right</th>` : `<th class="n">Points</th><th class="n hideSm">Played</th>`}</tr></thead><tbody>${body}</tbody></table>
+        <p class="small muted">${tab === "today" ? "Ties go to the faster total time." : "This week (from Monday): each player's best 5 days count, so missing a day or two doesn't sink you."}</p>
+        <button class="btn quiet small" id="leave">Leave group</button>
+      </div>`);
+    $("#back").onclick = () => viewHome();
+    $("#copyLink").onclick = () => copy(link);
+    if ($("#play")) $("#play").onclick = () => viewPlay(g.subject);
+    main().querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+    $("#leave").onclick = async () => {
+      if (!confirm(`Leave ${g.name}?`)) return;
+      try { await request({ action: "dailyGroupLeave", groupId: g.id, ...creds() }); viewHome(); } catch (e) { toast(e.message); }
+    };
+  };
+  render();
+}
+
+// Opened an invite link while already registered.
+async function viewInvite(groupId){
+  VIEW = "invite";
+  let r;
+  try { r = await request({ action: "dailyGroupInfo", groupId }); }
+  catch (e) { clearParams("group"); toast(e.message); return ME ? viewHome() : viewRegister(); }
+  noteServer(r);
+  if (!ME) return viewRegister(r.group);
+  const g = r.group;
+  show(`<div class="panel">
+    <h1>Join ${esc(g.name)}?</h1>
+    <p class="sub">${esc(SUBJECTS[g.subject]?.title || g.subject)} &middot; ${plural(g.members, "member")}${g.ownerName ? " &middot; started by " + esc(g.ownerName) : ""}</p>
+    <p>You'll see each other's daily scores and streaks for this subject.</p>
+    <div class="row"><button class="btn primary" id="join">Join as ${esc(ME.name)}</button><button class="btn" id="no">No thanks</button></div>
+  </div>`);
+  $("#join").onclick = async () => {
+    try { await request({ action: "dailyGroupJoin", groupId: g.id, ...creds() }); clearParams("group"); viewBoard(g.id); }
+    catch (e) { handleAuthError(e); }
+  };
+  $("#no").onclick = () => { clearParams("group"); viewHome(); };
+}
+
+/* ---------------------------------------------------------------- play */
+// The value of a question after `ms` beyond its reading time (mirrors the server's curve).
+function speedFactor(ms){
+  const t = Math.max(0, ms) / 1000;
+  if (t <= 7) return 1 - 0.03 * t;
+  if (t <= 19) return 0.79 - 0.045 * (t - 7);
+  return 0.25;
+}
+const PLAY = { subject: null, date: null, q: null, shownAt: 0, timer: null, raf: null, answering: false, marks: [], score: 0, correct: 0 };
+
+async function viewPlay(subject){
+  VIEW = "play";
+  show(`<div class="panel"><div class="waiting">Getting today's set&hellip;</div></div>`);
+  let r;
+  try { r = await request({ action: "dailyStart", subject, ...creds() }); }
+  catch (e) { return handleAuthError(e); }
+  noteServer(r);
+  Object.assign(PLAY, { subject, date: r.date, marks: [], score: r.score || 0, correct: r.correct || 0, answering: true });
+  if (r.type === "dailyDone") return viewDone(subject, r.date, r.summary, r.review, r.streak);
+  PLAY.marks = Array.from({ length: r.total }, (_, i) => i < r.idx ? "x" : "");   // earlier answers (resumed): outcome shown at the end
+  showQuestion(r);
+}
+
+function showQuestion(r){
+  clearTimers();
+  PLAY.q = r;
+  const S = SUBJECTS[PLAY.subject], q = r.question;
+  const begin = () => {
+    PLAY.shownAt = performance.now(); PLAY.answering = false;   // answers are accepted only once the question is on screen
+    show(`<div class="panel">
+      <div class="qhead">
+        <span class="chip">${esc(S.labels[q.type])}</span>
+        <span class="small muted">Question ${r.idx + 1} of ${r.total} &middot; up to ${r.points} pts</span>
+        <span class="sp"></span><span class="sc">Score <span id="sc">${PLAY.score}</span></span>
+      </div>
+      <div class="progress">${PLAY.marks.map((m, i) => `<i class="${i === r.idx ? "cur" : m === "ok" ? "ok" : m === "no" ? "no" : m === "x" ? "past" : ""}"></i>`).join("")}</div>
+      <div class="clock"><div class="bar"><b id="bar"></b></div><span class="val" id="val">${r.points} pts</span></div>
+      <div class="stem">${stemHTML(PLAY.subject, q)}</div>
+      <div class="opts">${q.options.map((o, i) => `<button class="opt" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`).join("")}</div>
+      <div id="fb"></div>
+    </div>`);
+    main().querySelectorAll(".opt").forEach(b => b.onclick = () => answer(+b.dataset.i));
+    const total = r.allowanceMs + r.limitMs;
+    const tick = () => {
+      const el = performance.now() - PLAY.shownAt;
+      const beyond = el - r.allowanceMs;
+      const f = speedFactor(beyond);
+      const bar = $("#bar"); if (!bar) return;
+      const left = Math.max(0, 1 - el / total);
+      bar.style.transform = `scaleX(${el < r.allowanceMs ? 1 : left})`;
+      bar.className = beyond <= 0 ? "" : f > 0.6 ? "mid" : "low";
+      $("#val").textContent = beyond <= 0 ? `${r.points} pts` : `${Math.round(r.points * f)} pts`;
+      if (el >= total) return answer(-1);
+      PLAY.raf = requestAnimationFrame(tick);
+    };
+    PLAY.raf = requestAnimationFrame(tick);
+  };
+  if (r.startsInMs > 30) { PLAY.timer = setTimeout(begin, r.startsInMs); } else begin();
+}
+function clearTimers(){ clearTimeout(PLAY.timer); cancelAnimationFrame(PLAY.raf); PLAY.timer = null; }
+
+async function answer(choice){
+  if (PLAY.answering) return;
+  PLAY.answering = true;
+  cancelAnimationFrame(PLAY.raf);
+  const clientMs = Math.round(performance.now() - PLAY.shownAt);
+  const r = PLAY.q;
+  const btns = [...main().querySelectorAll(".opt")];
+  btns.forEach(b => b.disabled = true);
+  if (choice >= 0) btns[choice].classList.add("pending");
+  let res;
+  try { res = await request({ action: "dailyAnswer", subject: PLAY.subject, date: PLAY.date, idx: r.idx, choice, clientMs, ...creds() }, { retries: 3 }); }
+  catch (e) {
+    if (e.code === "bad_player") return handleAuthError(e);
+    // Lost the connection: ask the server where we are (the answer may or may not have landed).
+    $("#fb").innerHTML = `<div class="err">${esc(e.message)} Reconnecting&hellip;</div>`;
+    setTimeout(() => viewPlay(PLAY.subject), 1500);
+    return;
+  }
+  noteServer(res);
+  PLAY.score = res.score; PLAY.correct = res.correct;
+  const x = res.result;
+  if (!x) return res.done ? viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak) : showQuestion(res.next);
+  PLAY.marks[r.idx] = x.correct ? "ok" : "no";
+  recordPractice(PLAY.subject, x.word, r.question.type, x.correct);
+  btns.forEach((b, i) => { b.classList.remove("pending"); if (i === x.answer) b.classList.add("right"); else if (i === choice) b.classList.add("wrong"); else b.classList.add("dim"); });
+  const sc = $("#sc"); if (sc) sc.textContent = res.score;
+  const head = x.timedOut ? "Time's up" : x.correct ? `Correct · +${x.points}` : "Not quite";
+  const speed = x.correct && x.factor < 1 ? ` <span class="small muted">(${fmtSecs(x.ms)}, ${Math.round(x.factor * 100)}% of ${r.points})</span>` : "";
+  $("#fb").innerHTML = `<div class="feedback ${x.correct ? "ok" : "no"}">
+      <h4>${head}${speed}</h4>
+      <p><b>${esc(x.word)}</b> — ${esc(x.definition || "")}</p>
+      ${!x.correct && x.example ? `<p class="ex">“${esc(x.example)}”</p>` : ""}
+      ${x.correction ? `<p class="corr"><b>Class notes check:</b> ${esc(x.correction)}</p>` : ""}
+    </div>`;
+  if (res.done) {
+    PLAY.timer = setTimeout(() => viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak), x.correct ? 1200 : 2600);
+  } else {
+    // The server starts the next question's clock after the feedback pause; show it then.
+    showQuestion(res.next);
+  }
+}
+document.addEventListener("keydown", e => {
+  if (VIEW !== "play" || PLAY.answering || e.target.tagName === "INPUT") return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 4 && main().querySelector(".opt")) answer(n - 1);
+});
+
+/* ---------------------------------------------------------------- results */
+async function viewDone(subject, date, summary, review, streak){
+  VIEW = "done";
+  clearTimers();
+  const S = SUBJECTS[subject];
+  const missed = (review || []).filter(x => !x.correct);
+  const fast = (review || []).filter(x => x.correct);
+  const avg = fast.length ? fast.reduce((a, x) => a + x.ms, 0) / fast.length : 0;
+  let streakLine = "";
+  if (streak) {
+    streakLine = `\u{1F525} <b>${plural(streak.current, "day")}</b> in a row`
+      + (streak.usedFreezes ? ` (a freeze covered ${plural(streak.usedFreezes, "missed day")})` : "")
+      + (streak.earnedFreeze ? ` · you earned a freeze ❄️` : "")
+      + (streak.current > 1 && streak.current === streak.best ? " · your best yet" : "");
+  }
+  show(`<div class="panel">
+      <div class="row" style="justify-content:space-between"><button class="btn quiet small" id="back">← Home</button><span class="tag">${esc(S.title)}</span></div>
+      <h1 style="margin-top:6px">Today's set is done</h1>
+      <p class="sub">${fmtDate(date)}</p>
+      ${streakLine ? `<div class="banner">${streakLine}</div>` : ""}
+      <div class="big3"><div><b>${summary.score}</b><span>points</span></div><div><b>${summary.correct}/20</b><span>right</span></div><div><b>${avg ? fmtSecs(avg) : "–"}</b><span>avg. right answer</span></div></div>
+      <div id="standings"></div>
+      ${missed.length ? `<h3>To review</h3><ul class="review">${missed.map(x => `<li><span class="x">✗</span><b>${esc(x.word)}</b> \u2014 ${esc(x.definition)}</li>`).join("")}</ul>
+        <p><a class="btn" href="${practiceHref(subject)}">Practice these in Word Rally</a></p>` : `<p>Perfect set. \u{1F44F}</p>`}
+      <p class="small muted">Come back after midnight Central for tomorrow's set.</p>
+    </div>`);
+  $("#back").onclick = () => viewHome();
+  // Where you stand in your groups for this subject.
+  try {
+    const me = await request({ action: "dailyMe", ...creds() });
+    const gs = me.groups.filter(g => g.subject === subject);
+    if (!gs.length) {
+      $("#standings").innerHTML = `<p class="small muted">Make a group for ${esc(S.short)} on the home page to compare scores with friends.</p>`;
+      return;
+    }
+    const boards = await Promise.all(gs.map(g => request({ action: "dailyBoard", groupId: g.id, ...creds() }).catch(() => null)));
+    const el = $("#standings"); if (!el) return;
+    el.innerHTML = boards.filter(Boolean).map(b => {
+      const done = b.rows.filter(x => x.today && x.today.done).sort((a, c) => c.today.score - a.today.score || a.today.totalMs - c.today.totalMs);
+      const pos = done.findIndex(x => x.you) + 1;
+      const waiting = b.rows.length - done.length;
+      return `<div class="invite" style="border-style:solid"><span style="flex:1"><b>${esc(b.group.name)}</b>: you're <b>#${pos}</b> of ${done.length} so far${waiting ? ` <span class="muted small">(${waiting} still to play)</span>` : ""}</span>
+        <button class="btn small" data-board="${b.group.id}">Scores</button></div>`;
+    }).join("");
+    el.querySelectorAll("[data-board]").forEach(x => x.onclick = () => viewBoard(x.dataset.board));
+  } catch (e) {}
+}
+
+/* ---------------------------------------------------------------- start */
+(async function start(){
+  if (!serverUrl()) { show(`<div class="panel">${showError("This page needs the game server's address (SERVER_URL).")}</div>`); return; }
+  // Recovery link from another device: ?login=<id>.<secret>
+  const login = PARAMS.get("login");
+  if (login && /^[a-z0-9]+\.[0-9a-f]{32}$/.test(login)) {
+    const [playerId, secret] = login.split(".");
+    try {
+      const r = await request({ action: "dailyMe", playerId, secret });
+      ME = { playerId, secret, name: r.player.name }; meWrite(ME);
+      toast(`Signed in as ${r.player.name}`);
+    } catch (e) { toast(e.message); }
+    clearParams("login");
+  }
+  const group = PARAMS.get("group");
+  try {
+    if (group) return await viewInvite(group);
+    if (!ME) return viewRegister();
+    await viewHome();
+  } catch (e) { show(`<div class="panel">${showError(e)}</div>`); }
+})();
+</script>
+</body>
+</html>

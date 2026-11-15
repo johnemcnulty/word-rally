@@ -255,6 +255,7 @@ table.lab td.w{font-weight:700}
     <div class="logo">Word<span>Rally</span></div>
     <span class="deckTag" id="deckTag"></span>
     <div class="sp"></div>
+    <a class="btn" href="daily.html" style="text-decoration:none">Daily</a>
     <button class="btn" id="labBtn">Word Lab</button>
     <button class="btn" id="newBtn">New race</button>
   </header>
@@ -565,6 +566,15 @@ function profileSummary(name){
   const st = Object.values(p.stats);
   return {seen: st.filter(x=>x.seen).length, cleared: st.map(x=>migrateStat({...x})).filter(x=>x.done.every(Boolean)).length, missed: st.filter(x=>x.hist && x.hist[x.hist.length-1]===0).length};
 }
+// Links from Word Rally Daily open a subject for a player: ?deck=bio3&player=Ann
+{
+  const q = new URLSearchParams(location.search);
+  const pn = (q.get("player") || "").trim().slice(0, 20);
+  if (pn) settings.name = pn;
+  if (DECK_DEFS[q.get("deck")]) applyDeck(q.get("deck"));
+  if (pn || q.get("deck")) saveProgressSettingsOnly();
+}
+function saveProgressSettingsOnly(){ if (!STORAGE_OK) return; store = storeRead(); store.settings = settings; storeWrite(store); }
 loadProfile(settings.name);
 
 function newGame(){
@@ -960,7 +970,7 @@ function setupScreen(prefillCode){
       </ul>
     </div>
     <div class="field">${seg("mode",[["solo","Solo vs bots"],["online","Play with friends"],["challenge","Challenge"]],mode)}</div>
-    <div class="field"><label for="nm">Your name</label><input id="nm" maxlength="14" value="${esc(settings.name)}"><small id="welcome" style="color:var(--muted)"></small></div>
+    <div class="field"><label for="nm">Your name</label><input id="nm" maxlength="20" value="${esc(settings.name)}"><small id="welcome" style="color:var(--muted)"></small></div>
     <div id="soloOpts" ${mode!=="solo"?"hidden":""}>
       <div class="field"><label>Race length</label>${seg("length",[["short","Short · 20"],["standard","Standard · 30"],["long","Long · 40"]],settings.length)}</div>
       <div class="field"><label>Rivals</label>${seg("level",[["easy","Easy"],["medium","Medium"],["hard","Hard"]],settings.level)}</div>
@@ -1649,7 +1659,7 @@ function challengeScreen(ch){
       <p class="sub">A ${mins(ch.minutes)} ${esc((DECK_DEFS[ch.deck]||DECK_DEFS.sat).title)} sprint, with the same questions ${esc(c.name)} got.</p>
       <div class="stat"><div><b>${c.status==="done" ? c.score : "—"}</b><span>${c.status==="done" ? "score to beat" : `${esc(c.name)} hasn't played yet`}</span></div>
       <div><b>${ch.minutes}:00</b><span>on the clock</span></div></div>
-      <div class="field"><label for="chName">Your name</label><input id="chName" maxlength="14" value="${esc(settings.name==="You"?"":settings.name)}" placeholder="Your name"></div>`;
+      <div class="field"><label for="chName">Your name</label><input id="chName" maxlength="20" value="${esc(settings.name==="You"?"":settings.name)}" placeholder="Your name"></div>`;
   }
   html += `<div class="rules"><b>How scoring works</b><ul>
       <li>Answer as many as you can before the clock runs out.</li>
