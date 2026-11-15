@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Word Rally Daily</title>
 <meta name="description" content="Twenty questions a day, the same for everyone in a subject. Keep your streak and beat your friends.">
+<!-- Home-screen app: icon, name, and full-screen launch on iPhone and Android -->
+<link rel="manifest" href="daily-manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Word Rally">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)">
 <style>
 :root{
   --bg:#f5f3ee; --surface:#ffffff; --surface2:#faf9f6; --ink:#1c1b18; --muted:#6a665d; --line:#e2ddd2;
@@ -137,6 +147,10 @@ table.board{width:100%;border-collapse:collapse;font-size:15px}
 .err{background:var(--badBg);color:var(--bad);border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:14px}
 .how{font-size:14px;color:var(--muted)}
 .how p{margin:6px 0}
+.already{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.already summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent)}
+.already p{margin:8px 0}
+@media (display-mode:standalone){ .wrap{padding-top:max(16px, env(safe-area-inset-top))} }
 .foot{text-align:center;color:var(--muted);font-size:12px;margin:18px 0 6px}
 .toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);font-size:14px;font-weight:600;z-index:50;max-width:calc(100% - 24px)}
 @media (max-width:520px){
@@ -222,6 +236,12 @@ function copy(text){
   if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => prompt("Copy this link:", text));
   else prompt("Copy this link:", text);
 }
+// On phones, open the share sheet (Messages, etc.); elsewhere, copy.
+function shareOrCopy(text, title){
+  if (navigator.share && matchMedia("(pointer:coarse)").matches) navigator.share({ title, url: text }).catch(() => {});
+  else copy(text);
+}
+const canShare = () => !!navigator.share && matchMedia("(pointer:coarse)").matches;
 function pageLink(params){
   const u = new URL(location.href); u.search = ""; u.hash = "";
   for (const [k, v] of Object.entries(params)) u.searchParams.set(k, v);
@@ -334,7 +354,7 @@ setInterval(() => {
 /* ---------------------------------------------------------------- views */
 const main = () => $("#main");
 let VIEW = null;
-function show(html){ main().innerHTML = html; window.scrollTo(0, 0); }
+function show(html){ main().innerHTML = html; window.scrollTo(0, 0); LAST_DRAW = Date.now(); }
 function showError(e){ return `<div class="err">${esc(e.message || e)}</div>`; }
 
 // Register (first visit, or after "start over").
@@ -347,10 +367,15 @@ function viewRegister(invite, error){
       ${invite ? `<div class="banner">You've been invited to join <b>${esc(invite.name)}</b> (${esc(SUBJECTS[invite.subject]?.title || invite.subject)})${invite.ownerName ? " by " + esc(invite.ownerName) : ""}. Pick a name to join.</div>` : ""}
       ${error ? showError(error) : ""}
       <div class="row">
-        <input id="name" maxlength="20" placeholder="Your name (what friends will see)" autocomplete="nickname">
+        <input id="name" maxlength="20" placeholder="Your name" autocomplete="nickname">
         <button class="btn primary" id="go">Start</button>
       </div>
       <p class="small muted" style="margin-top:12px">No account or password. This browser remembers you, and you'll get a private link to use on other devices.</p>
+      <details class="already"${error && error.fromLink ? " open" : ""}>
+        <summary>Already playing on another device?</summary>
+        <p class="small muted">Paste the link from \u201CYour link for other devices\u201D on that device's home page.</p>
+        <div class="row"><input id="link" placeholder="Paste your link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn" id="useLink">Sign in</button></div>
+      </details>
     </div>
     ${howItWorks()}`);
   const go = async () => {
@@ -368,7 +393,33 @@ function viewRegister(invite, error){
   };
   $("#go").onclick = go;
   $("#name").onkeydown = e => { if (e.key === "Enter") go(); };
-  $("#name").focus();
+  const useLink = async () => {
+    const ok = await signInWithLink($("#link").value);
+    if (ok === null) { const e = new Error("That doesn't look like your Word Rally Daily link: it should contain \u201Clogin=\u201D."); e.fromLink = true; return viewRegister(invite, e); }
+    if (!ok) return;
+    if (invite) return viewInvite(invite.id);
+    viewHome();
+  };
+  $("#useLink").onclick = useLink;
+  $("#link").onkeydown = e => { if (e.key === "Enter") useLink(); };
+  if (!matchMedia("(pointer:coarse)").matches) $("#name").focus();
+}
+// Accepts the whole link or just the part after login=. Returns true when signed in,
+// false when the server rejected it (the message is shown), null when it isn't a link at all.
+async function signInWithLink(text){
+  const m = String(text || "").trim().match(/(?:login=)?([a-z0-9]{6,12})\.([0-9a-f]{32})\b/i);
+  if (!m) return null;
+  const playerId = m[1].toLowerCase(), secret = m[2].toLowerCase();
+  try {
+    const r = await request({ action: "dailyMe", playerId, secret });
+    noteServer(r);
+    ME = { playerId, secret, name: r.player.name }; meWrite(ME);
+    toast(`Signed in as ${r.player.name}`);
+    return true;
+  } catch (e) {
+    if (e.code === "bad_player") e.message = "That link wasn\u2019t recognized. Check that you copied all of it.";
+    e.fromLink = true; viewRegister(null, e); return false;
+  }
 }
 
 function howItWorks(){
@@ -455,7 +506,7 @@ function handleAuthError(e){
 
 // A group's board: today's scores (visible before you play) and this week's totals.
 async function viewBoard(groupId, justMade){
-  VIEW = "board";
+  VIEW = "board"; LAST_BOARD = groupId;
   let r;
   try { r = await request({ action: "dailyBoard", groupId, ...creds() }); }
   catch (e) {
@@ -491,7 +542,7 @@ async function viewBoard(groupId, justMade){
         <h1 style="margin-top:6px">${esc(g.name)}</h1>
         <p class="sub">${plural(g.members, "member")} &middot; ${fmtDate(r.today)}</p>
         ${justMade ? `<div class="banner">Group created. Send this link to friends so they can join.</div>` : ""}
-        <div class="invite"><code>${esc(link)}</code><button class="btn small" id="copyLink">Copy invite link</button></div>
+        <div class="invite"><code>${esc(link)}</code><button class="btn small" id="copyLink">${canShare() ? "Share invite link" : "Copy invite link"}</button></div>
         ${!myToday ? `<p><button class="btn primary" id="play">Play today's 20</button></p>` : !myToday.done ? `<p><button class="btn primary" id="play">Resume (${myToday.answered}/20)</button></p>` : ""}
         <div class="tabs"><button data-tab="today" class="${tab === "today" ? "on" : ""}">Today</button><button data-tab="week" class="${tab === "week" ? "on" : ""}">This week</button></div>
         <table class="board"><thead><tr><th></th><th>Player</th><th class="n">Streak</th>${tab === "today" ? `<th class="n">Score</th><th class="n hideSm">Right</th>` : `<th class="n">Points</th><th class="n hideSm">Played</th>`}</tr></thead><tbody>${body}</tbody></table>
@@ -499,7 +550,7 @@ async function viewBoard(groupId, justMade){
         <button class="btn quiet small" id="leave">Leave group</button>
       </div>`);
     $("#back").onclick = () => viewHome();
-    $("#copyLink").onclick = () => copy(link);
+    $("#copyLink").onclick = () => shareOrCopy(link, `Join ${g.name} on Word Rally Daily`);
     if ($("#play")) $("#play").onclick = () => viewPlay(g.subject);
     main().querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
     $("#leave").onclick = async () => {
@@ -688,19 +739,27 @@ async function viewDone(subject, date, summary, review, streak){
   } catch (e) {}
 }
 
+/* ---------------------------------------------------------------- coming back to the app
+   A home-screen app isn't reloaded when you reopen it the next day; it resumes where it was.
+   So when the page becomes visible again after a while, or after midnight, redraw it from the server. */
+let LAST_DRAW = Date.now(), LAST_BOARD = null;
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible" || !ME) return;
+  const stale = Date.now() - LAST_DRAW > 60000 || (RESET_AT && Date.now() > RESET_AT);
+  if (!stale) return;
+  if (VIEW === "home" || VIEW === "done") viewHome();
+  else if (VIEW === "board" && LAST_BOARD) viewBoard(LAST_BOARD);
+});
+
 /* ---------------------------------------------------------------- start */
 (async function start(){
   if (!serverUrl()) { show(`<div class="panel">${showError("This page needs the game server's address (SERVER_URL).")}</div>`); return; }
   // Recovery link from another device: ?login=<id>.<secret>
   const login = PARAMS.get("login");
-  if (login && /^[a-z0-9]+\.[0-9a-f]{32}$/.test(login)) {
-    const [playerId, secret] = login.split(".");
-    try {
-      const r = await request({ action: "dailyMe", playerId, secret });
-      ME = { playerId, secret, name: r.player.name }; meWrite(ME);
-      toast(`Signed in as ${r.player.name}`);
-    } catch (e) { toast(e.message); }
+  if (login) {
     clearParams("login");
+    const ok = await signInWithLink(login);
+    if (ok === false) return;               // the sign-up screen is already showing the error
   }
   const group = PARAMS.get("group");
   try {
