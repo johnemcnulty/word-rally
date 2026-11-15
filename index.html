@@ -168,6 +168,9 @@ button.card:disabled{opacity:.55;cursor:default}
 .note{background:var(--surface2);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:14px}
 [hidden]{display:none!important}
 
+.dailyLink{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;text-decoration:none;color:var(--ink);margin:0 0 16px;padding:10px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));background:color-mix(in srgb,var(--gold) 12%,var(--surface))}
+.dailyLink b{color:var(--gold)} .dailyLink span{flex:1;min-width:200px;font-size:14px;color:var(--muted)} .dailyLink i{font-style:normal;font-weight:800;color:var(--gold)}
+.dailyLink:hover{border-color:var(--gold)}
 .deckTag{font-size:12px;font-weight:700;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:999px;padding:2px 9px}
 .feedback .corr{font-size:14px;margin-top:8px;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--gold) 14%,transparent)}
 
@@ -255,7 +258,7 @@ table.lab td.w{font-weight:700}
     <div class="logo">Word<span>Rally</span></div>
     <span class="deckTag" id="deckTag"></span>
     <div class="sp"></div>
-    <a class="btn" href="daily.html" style="text-decoration:none">Daily</a>
+    <a class="btn" href="daily.html" style="text-decoration:none;color:var(--ink)">Daily</a>
     <button class="btn" id="labBtn">Word Lab</button>
     <button class="btn" id="newBtn">New race</button>
   </header>
@@ -958,6 +961,7 @@ function setupScreen(prefillCode){
   const m = openModal(`
     <h2>Word Rally</h2>
     <p class="sub">Race to the finish. Every move is earned with a right answer.</p>
+    <a class="dailyLink" href="daily.html"><b>New: Word Rally Daily</b><span>20 questions a day, the same for everyone. Keep a streak and compare scores with friends.</span><i>\u2192</i></a>
     <div class="field"><label>Subject</label>${seg("deck",[["sat","SAT vocabulary"],["bio2b","AP Bio Unit 2B"],["bio3","AP Bio Unit 3"]],DECK_ID)}
       <small id="deckTitle" style="color:var(--muted)">${esc(DECK.title)} \u00B7 ${WORDS.length} ${DECK.noun}s</small></div>
     <div class="rules">
