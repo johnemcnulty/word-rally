@@ -15,7 +15,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "abrupt",
@@ -33,7 +34,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "abstain",
@@ -52,7 +54,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "abstract",
@@ -73,7 +76,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "abundant",
@@ -92,7 +96,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "abysmal",
@@ -110,7 +115,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "accentuate",
@@ -129,7 +135,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "accessory",
@@ -148,7 +155,8 @@
   "multiSense": true,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "accommodate",
@@ -166,7 +174,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "accrete",
@@ -183,7 +192,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "accumulate",
@@ -202,7 +212,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "acknowledge",
@@ -218,7 +229,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "acquired",
@@ -233,7 +245,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "adept",
@@ -252,7 +265,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "adequate",
@@ -269,7 +283,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "adhere",
@@ -285,7 +300,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "adroit",
@@ -304,7 +320,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "advantageous",
@@ -320,7 +337,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "advent",
@@ -336,7 +354,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "affecting",
@@ -355,7 +374,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "affinity",
@@ -371,7 +391,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "aggrandize",
@@ -390,7 +411,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "aggravate",
@@ -410,7 +432,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "aggressive",
@@ -427,7 +450,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "allude",
@@ -444,7 +468,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ambidextrous",
@@ -457,7 +482,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "ambiguity",
@@ -475,7 +501,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "ambiguous",
@@ -496,7 +523,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "ambivalence",
@@ -515,7 +543,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ambivalent",
@@ -535,7 +564,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ameliorate",
@@ -556,7 +586,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "amorphous",
@@ -574,7 +605,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "amplify",
@@ -598,7 +630,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "analogous",
@@ -615,7 +648,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "animosity",
@@ -635,7 +669,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "annotate",
@@ -651,7 +686,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "anomalous",
@@ -676,7 +712,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "anomaly",
@@ -696,7 +733,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "antagonist",
@@ -711,7 +749,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "antagonistic",
@@ -731,7 +770,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "antecedent",
@@ -748,7 +788,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "anticipate",
@@ -769,7 +810,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "antipathy",
@@ -788,7 +830,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "aperture",
@@ -801,7 +844,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "apex",
@@ -814,7 +858,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "appeasement",
@@ -827,7 +872,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "appraise",
@@ -843,7 +889,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "appropriate",
@@ -862,7 +909,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "approximate",
@@ -878,7 +926,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "arbitrary",
@@ -896,7 +945,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "arcane",
@@ -916,7 +966,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "arduous",
@@ -934,7 +985,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "assert",
@@ -952,7 +1004,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "assuage",
@@ -970,7 +1023,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "atypical",
@@ -993,7 +1047,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "augment",
@@ -1014,7 +1069,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "austere",
@@ -1033,7 +1089,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "banal",
@@ -1052,7 +1109,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "bemused",
@@ -1070,7 +1128,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "beneficial",
@@ -1090,7 +1149,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "benevolent",
@@ -1108,7 +1168,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "benign",
@@ -1126,7 +1187,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "biased",
@@ -1141,7 +1203,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "bold",
@@ -1157,7 +1220,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "buttress",
@@ -1179,7 +1243,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "bypass",
@@ -1196,7 +1261,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "calibrate",
@@ -1212,7 +1278,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "candid",
@@ -1229,7 +1296,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "catastrophic",
@@ -1246,7 +1314,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "circumvent",
@@ -1264,7 +1333,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "cite",
@@ -1279,7 +1349,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "clichéd",
@@ -1298,7 +1369,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "coalesce",
@@ -1313,7 +1385,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "coarse",
@@ -1326,7 +1399,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "coincide",
@@ -1341,7 +1415,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "coincidence",
@@ -1356,7 +1431,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "collaboration",
@@ -1371,7 +1447,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "colloquialism",
@@ -1384,7 +1461,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "committed",
@@ -1400,7 +1478,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "commonplace",
@@ -1421,7 +1500,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "compelling",
@@ -1444,7 +1524,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "competent",
@@ -1462,7 +1543,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "complementary",
@@ -1480,7 +1562,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "compound",
@@ -1500,7 +1583,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "comprise",
@@ -1518,7 +1602,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "conceal",
@@ -1536,7 +1621,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "concede",
@@ -1554,7 +1640,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "conceptualize",
@@ -1571,7 +1658,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "confine",
@@ -1591,7 +1679,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "conflate",
@@ -1608,7 +1697,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "conform",
@@ -1626,7 +1716,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "confound",
@@ -1645,7 +1736,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "congruence",
@@ -1662,7 +1754,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "conjecture",
@@ -1682,7 +1775,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "consensus",
@@ -1699,7 +1793,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "consistent",
@@ -1716,7 +1811,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "conspicuous",
@@ -1737,7 +1833,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "constant",
@@ -1758,7 +1855,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "constrain",
@@ -1784,7 +1882,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "constrict",
@@ -1802,7 +1901,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "contentious",
@@ -1822,7 +1922,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "contingent",
@@ -1840,7 +1941,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "continuity",
@@ -1853,7 +1955,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "contradict",
@@ -1874,7 +1977,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "contrived",
@@ -1895,7 +1999,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "controversial",
@@ -1913,7 +2018,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "convene",
@@ -1926,7 +2032,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "conventional",
@@ -1948,7 +2055,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "convey",
@@ -1967,7 +2075,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "copious",
@@ -1986,7 +2095,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "cordially",
@@ -1999,7 +2109,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "corollary",
@@ -2014,7 +2125,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "corroborate",
@@ -2033,7 +2145,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "corrosive",
@@ -2046,7 +2159,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "counteract",
@@ -2067,7 +2181,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "counterfactual",
@@ -2084,7 +2199,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "counterproductive",
@@ -2101,7 +2217,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "credible",
@@ -2121,7 +2238,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "critical",
@@ -2142,7 +2260,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "customary",
@@ -2161,7 +2280,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "cynical",
@@ -2178,7 +2298,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "deceptive",
@@ -2199,7 +2320,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "decisive",
@@ -2221,7 +2343,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "deficient",
@@ -2239,7 +2362,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "defunct",
@@ -2256,7 +2380,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "defy",
@@ -2274,7 +2399,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "delegate",
@@ -2291,7 +2417,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "deliberation",
@@ -2307,7 +2434,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "delicate",
@@ -2329,7 +2457,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "demarcate",
@@ -2345,7 +2474,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "demarcation",
@@ -2360,7 +2490,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "denigrate",
@@ -2381,7 +2512,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "denounce",
@@ -2401,7 +2533,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "deplete",
@@ -2416,7 +2549,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "derived",
@@ -2432,7 +2566,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "designate",
@@ -2451,7 +2586,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "despise",
@@ -2470,7 +2606,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "desultory",
@@ -2490,7 +2627,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "detract",
@@ -2507,7 +2645,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "deviate",
@@ -2524,7 +2663,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "devise",
@@ -2542,7 +2682,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "dignify",
@@ -2561,7 +2702,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "diminish",
@@ -2581,7 +2723,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "disastrous",
@@ -2597,7 +2740,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "discernible",
@@ -2616,7 +2760,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "disconcerting",
@@ -2634,7 +2779,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "discord",
@@ -2652,7 +2798,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "discount",
@@ -2674,7 +2821,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "discrepancy",
@@ -2691,7 +2839,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "discrepant",
@@ -2711,7 +2860,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "discretion",
@@ -2729,7 +2879,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "disengage",
@@ -2746,7 +2897,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "dismiss",
@@ -2770,7 +2922,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "disorienting",
@@ -2790,7 +2943,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "disparage",
@@ -2812,7 +2966,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "disparate",
@@ -2832,7 +2987,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "disperse",
@@ -2850,7 +3006,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "dispute",
@@ -2871,7 +3028,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "disregard",
@@ -2892,7 +3050,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "distinct",
@@ -2913,7 +3072,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "distressed",
@@ -2929,7 +3089,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "diverge",
@@ -2950,7 +3111,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "diverse",
@@ -2969,7 +3131,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "dogmatic",
@@ -2988,7 +3151,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "dominance",
@@ -3007,7 +3171,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "dormant",
@@ -3025,7 +3190,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "dynamic",
@@ -3042,7 +3208,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "earnest",
@@ -3060,7 +3227,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "eclipse",
@@ -3081,7 +3249,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "efficacy",
@@ -3097,7 +3266,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "eloquent",
@@ -3115,7 +3285,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "elusive",
@@ -3138,7 +3309,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "emulate",
@@ -3154,7 +3326,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "encompass",
@@ -3175,7 +3348,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "encounter",
@@ -3190,7 +3364,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "enduring",
@@ -3210,7 +3385,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "engender",
@@ -3232,7 +3408,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "engulf",
@@ -3250,7 +3427,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "entail",
@@ -3267,7 +3445,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "entrench",
@@ -3284,7 +3463,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "enumerate",
@@ -3297,7 +3477,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "epitomize",
@@ -3313,7 +3494,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "equitable",
@@ -3328,7 +3510,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "equivocal",
@@ -3349,7 +3532,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "erratic",
@@ -3372,7 +3556,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "esteem",
@@ -3391,7 +3576,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "evince",
@@ -3407,7 +3593,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "evoke",
@@ -3429,7 +3616,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "exacerbate",
@@ -3448,7 +3636,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "exactitude",
@@ -3464,7 +3653,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "exaggerate",
@@ -3483,7 +3673,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "exceed",
@@ -3501,7 +3692,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "exemplify",
@@ -3517,7 +3709,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "exhaustive",
@@ -3535,7 +3728,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "exorbitant",
@@ -3550,7 +3744,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "explicable",
@@ -3563,7 +3758,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "exploit",
@@ -3579,7 +3775,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "extensive",
@@ -3599,7 +3796,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "extraneous",
@@ -3620,7 +3818,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "extrapolate",
@@ -3642,7 +3841,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "fabricate",
@@ -3660,7 +3860,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "familiarize",
@@ -3673,7 +3874,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "feasible",
@@ -3691,7 +3893,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "fleeting",
@@ -3706,7 +3909,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "forestall",
@@ -3728,7 +3932,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "foretell",
@@ -3746,7 +3951,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "forfeiture",
@@ -3761,7 +3967,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "foster",
@@ -3782,7 +3989,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "fragile",
@@ -3802,7 +4010,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "fraudulent",
@@ -3820,7 +4029,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "frivolous",
@@ -3839,7 +4049,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "fruitless",
@@ -3856,7 +4067,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "gauche",
@@ -3871,7 +4083,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "genuine",
@@ -3892,7 +4105,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "grapple",
@@ -3906,7 +4120,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "gratuitous",
@@ -3927,7 +4142,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "habitual",
@@ -3947,7 +4163,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "haphazard",
@@ -3966,7 +4183,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "hastily",
@@ -3983,7 +4201,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "heretofore",
@@ -3996,7 +4215,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "hesitancy",
@@ -4012,7 +4232,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "heterodox",
@@ -4031,7 +4252,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "heterogeneous",
@@ -4048,7 +4270,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "hinder",
@@ -4072,7 +4295,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "hoard",
@@ -4089,7 +4313,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "homogeneous",
@@ -4108,7 +4333,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "hypothesize",
@@ -4128,7 +4354,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "hypothetical",
@@ -4147,7 +4374,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "idealize",
@@ -4164,7 +4392,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "idiosyncratic",
@@ -4181,7 +4410,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "illicit",
@@ -4197,7 +4427,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "illuminate",
@@ -4213,7 +4444,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "imminent",
@@ -4233,7 +4465,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "immune",
@@ -4249,7 +4482,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "impart",
@@ -4264,7 +4498,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "impartial",
@@ -4281,7 +4516,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "impede",
@@ -4304,7 +4540,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "impending",
@@ -4321,7 +4558,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "impenetrable",
@@ -4343,7 +4581,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "imperative",
@@ -4362,7 +4601,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "imperceptible",
@@ -4384,7 +4624,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "implement",
@@ -4398,7 +4639,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "implication",
@@ -4413,7 +4655,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "implicit",
@@ -4431,7 +4674,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "imposing",
@@ -4449,7 +4693,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "impractical",
@@ -4467,7 +4712,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "improvise",
@@ -4484,7 +4730,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "inadequate",
@@ -4502,7 +4749,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "inadvertently",
@@ -4518,7 +4766,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "incite",
@@ -4538,7 +4787,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "incongruous",
@@ -4558,7 +4808,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "inconsequential",
@@ -4581,7 +4832,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "inconspicuous",
@@ -4602,7 +4854,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indecipherable",
@@ -4624,7 +4877,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indifference",
@@ -4641,7 +4895,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indisputable",
@@ -4659,7 +4914,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indistinct",
@@ -4684,7 +4940,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "individualistic",
@@ -4700,7 +4957,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indoctrinate",
@@ -4713,7 +4971,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "induce",
@@ -4733,7 +4992,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indulge",
@@ -4751,7 +5011,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "indulgent",
@@ -4768,7 +5029,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "ineffectual",
@@ -4787,7 +5049,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ineluctable",
@@ -4806,7 +5069,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "inevitable",
@@ -4825,7 +5089,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "inexplicable",
@@ -4845,7 +5110,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "infallible",
@@ -4862,7 +5128,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "infrequent",
@@ -4878,7 +5145,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "inhibit",
@@ -4903,7 +5171,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "innocuous",
@@ -4920,7 +5189,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "innovative",
@@ -4938,7 +5208,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "insensible",
@@ -4955,7 +5226,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "insignificant",
@@ -4976,7 +5248,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "inspirational",
@@ -4994,7 +5267,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "insuperable",
@@ -5012,7 +5286,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "intangible",
@@ -5030,7 +5305,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "interchangeable",
@@ -5047,7 +5323,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "interdependent",
@@ -5063,7 +5340,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "interject",
@@ -5077,7 +5355,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "interpret",
@@ -5093,7 +5372,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "intersect",
@@ -5108,7 +5388,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "intricate",
@@ -5128,7 +5409,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "intriguing",
@@ -5145,7 +5427,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "invalidate",
@@ -5166,7 +5449,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "inviolable",
@@ -5184,7 +5468,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "involuntarily",
@@ -5199,7 +5484,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "irrelevant",
@@ -5222,7 +5508,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "isolate",
@@ -5240,7 +5527,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "judicious",
@@ -5259,7 +5547,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "juxtapose",
@@ -5272,7 +5561,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "laconic",
@@ -5290,7 +5580,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "latent",
@@ -5307,7 +5598,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "legitimate",
@@ -5328,7 +5620,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "localized",
@@ -5345,7 +5638,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "lucid",
@@ -5361,7 +5655,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "lucrative",
@@ -5378,7 +5673,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "mandatory",
@@ -5398,7 +5694,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "manifest",
@@ -5422,7 +5719,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "meticulous",
@@ -5438,7 +5736,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "mimic",
@@ -5455,7 +5754,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "misanthropic",
@@ -5470,7 +5770,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "misrepresent",
@@ -5487,7 +5788,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "mitigate",
@@ -5509,7 +5811,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "moderate",
@@ -5527,7 +5830,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "moderation",
@@ -5544,7 +5848,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "multifaceted",
@@ -5564,7 +5869,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "mundane",
@@ -5585,7 +5891,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "mystifying",
@@ -5609,7 +5916,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "nebulous",
@@ -5635,7 +5943,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "negate",
@@ -5658,7 +5967,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "neglect",
@@ -5677,7 +5987,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "negligible",
@@ -5698,7 +6009,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "neutrality",
@@ -5716,7 +6028,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "notional",
@@ -5739,7 +6052,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "novel",
@@ -5759,7 +6073,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "nuanced",
@@ -5779,7 +6094,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "nurture",
@@ -5797,7 +6113,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "obligate",
@@ -5816,7 +6133,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "obscure",
@@ -5842,7 +6160,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "observant",
@@ -5861,7 +6180,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "obsolete",
@@ -5877,7 +6197,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "obstructed",
@@ -5900,7 +6221,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "oddity",
@@ -5919,7 +6241,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "offhand",
@@ -5940,7 +6263,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "omnipotent",
@@ -5956,7 +6280,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "onset",
@@ -5973,7 +6298,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "operative",
@@ -5994,7 +6320,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ornamental",
@@ -6013,7 +6340,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "ostensible",
@@ -6030,7 +6358,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "oust",
@@ -6047,7 +6376,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "outstrip",
@@ -6067,7 +6397,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "overlook",
@@ -6086,7 +6417,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "overshadow",
@@ -6108,7 +6440,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "overtly",
@@ -6126,7 +6459,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "overwhelmed",
@@ -6147,7 +6481,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "paradox",
@@ -6166,7 +6501,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "paramount",
@@ -6188,7 +6524,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "paucity",
@@ -6207,7 +6544,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "perceive",
@@ -6230,7 +6568,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "peripheral",
@@ -6254,7 +6593,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "permanent",
@@ -6274,7 +6614,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "perpetual",
@@ -6294,7 +6635,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "persistent",
@@ -6319,7 +6661,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "pervasive",
@@ -6340,7 +6683,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "plausible",
@@ -6362,7 +6706,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "popularize",
@@ -6380,7 +6725,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "postulate",
@@ -6402,7 +6748,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "pragmatic",
@@ -6422,7 +6769,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "precarious",
@@ -6443,7 +6791,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "precipitate",
@@ -6465,7 +6814,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "preclude",
@@ -6488,7 +6838,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "precursor",
@@ -6507,7 +6858,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "predatory",
@@ -6527,7 +6879,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "predetermined",
@@ -6548,7 +6901,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "prefigure",
@@ -6569,7 +6923,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "premeditated",
@@ -6589,7 +6944,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "prescribe",
@@ -6611,7 +6967,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "preserve",
@@ -6631,7 +6988,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "prestige",
@@ -6650,7 +7008,8 @@
   "sources": [
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "presume",
@@ -6674,7 +7033,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "pretentious",
@@ -6687,7 +7047,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "prevail",
@@ -6704,7 +7065,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "proclaim",
@@ -6721,7 +7083,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "proficient",
@@ -6738,7 +7101,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "profound",
@@ -6756,7 +7120,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "profusion",
@@ -6773,7 +7138,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "prohibitive",
@@ -6791,7 +7157,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "proliferate",
@@ -6807,7 +7174,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "prolong",
@@ -6822,7 +7190,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "prominent",
@@ -6840,7 +7209,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "proponent",
@@ -6854,7 +7224,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "provoke",
@@ -6874,7 +7245,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "prudently",
@@ -6891,7 +7263,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ramify",
@@ -6907,7 +7280,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "rationalize",
@@ -6922,7 +7296,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "rebut",
@@ -6942,7 +7317,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "recalcitrant",
@@ -6960,7 +7336,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "recant",
@@ -6979,7 +7356,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "receptive",
@@ -6996,7 +7374,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "reciprocate",
@@ -7012,7 +7391,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "rectify",
@@ -7033,7 +7413,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "redefine",
@@ -7048,7 +7429,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "redress",
@@ -7066,7 +7448,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "redundant",
@@ -7084,7 +7467,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "reform",
@@ -7102,7 +7486,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "refute",
@@ -7124,7 +7509,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "regulate",
@@ -7143,7 +7529,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "reiterate",
@@ -7160,7 +7547,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "relegate",
@@ -7178,7 +7566,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "renounce",
@@ -7199,7 +7588,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "replenish",
@@ -7215,7 +7605,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "replicable",
@@ -7230,7 +7621,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "repress",
@@ -7250,7 +7642,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "reprieve",
@@ -7263,7 +7656,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "repudiate",
@@ -7289,7 +7683,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "resilient",
@@ -7307,7 +7702,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "resolve",
@@ -7324,7 +7720,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "responsive",
@@ -7340,7 +7737,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "restrain",
@@ -7365,7 +7763,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "retain",
@@ -7381,7 +7780,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "retaliate",
@@ -7397,7 +7797,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "reticent",
@@ -7415,7 +7816,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "revere",
@@ -7433,7 +7835,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "reverence",
@@ -7450,7 +7853,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "rigid",
@@ -7469,7 +7873,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "robust",
@@ -7486,7 +7891,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "rousing",
@@ -7505,7 +7911,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "rudimentary",
@@ -7519,7 +7926,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "sanction",
@@ -7535,7 +7943,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "sanguine",
@@ -7548,7 +7957,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "satiate",
@@ -7566,7 +7976,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "saturate",
@@ -7585,7 +7996,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "scorn",
@@ -7607,7 +8019,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "scrutinize",
@@ -7623,7 +8036,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "secretive",
@@ -7639,7 +8053,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "sensitive",
@@ -7660,7 +8075,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "simulate",
@@ -7678,7 +8094,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "skeptical",
@@ -7695,7 +8112,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "sophisticated",
@@ -7715,7 +8133,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "span",
@@ -7731,7 +8150,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "sparingly",
@@ -7746,7 +8166,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "speculate",
@@ -7768,7 +8189,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "spurious",
@@ -7785,7 +8207,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "stark",
@@ -7803,7 +8226,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "strenuously",
@@ -7820,7 +8244,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "sturdily",
@@ -7834,7 +8259,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "stymie",
@@ -7858,7 +8284,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "subordinate",
@@ -7875,7 +8302,8 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "substantial",
@@ -7895,7 +8323,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "substantiate",
@@ -7913,7 +8342,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "subsume",
@@ -7930,7 +8360,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "subtle",
@@ -7952,7 +8383,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "subversive",
@@ -7971,7 +8403,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "succumb",
@@ -7989,7 +8422,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "superficial",
@@ -8009,7 +8443,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "superfluous",
@@ -8030,7 +8465,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "supplement",
@@ -8051,7 +8487,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "supplementary",
@@ -8068,7 +8505,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "suppress",
@@ -8087,7 +8525,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "surmise",
@@ -8110,7 +8549,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "surpass",
@@ -8130,7 +8570,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "susceptible",
@@ -8148,7 +8589,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "tangible",
@@ -8166,7 +8608,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "tedious",
@@ -8183,7 +8626,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "tentative",
@@ -8203,7 +8647,8 @@
   "multiSense": true,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "tenuous",
@@ -8223,7 +8668,8 @@
    "prepscholar",
    "mathchops",
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "theoretical",
@@ -8244,7 +8690,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "tranquil",
@@ -8258,7 +8705,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "transcend",
@@ -8277,7 +8725,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "ubiquitous",
@@ -8296,7 +8745,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "unanimous",
@@ -8311,7 +8761,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "unassuming",
@@ -8330,7 +8781,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "undeniable",
@@ -8346,7 +8798,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "undermine",
@@ -8374,7 +8827,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "underscore",
@@ -8394,7 +8848,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "undifferentiated",
@@ -8413,7 +8868,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "uniform",
@@ -8432,7 +8888,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "unobtrusive",
@@ -8453,7 +8910,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "unprecedented",
@@ -8471,7 +8929,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "unpretentious",
@@ -8488,7 +8947,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "unyielding",
@@ -8507,7 +8967,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "vacillating",
@@ -8527,7 +8988,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "validate",
@@ -8549,7 +9011,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "variable",
@@ -8567,7 +9030,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "verisimilitude",
@@ -8583,7 +9047,8 @@
   "sources": [
    "prepscholar",
    "mathchops"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "veritable",
@@ -8602,7 +9067,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "viable",
@@ -8622,7 +9088,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "vigilance",
@@ -8637,7 +9104,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "vindicate",
@@ -8654,7 +9122,8 @@
   "multiSense": false,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "core"
  },
  {
   "word": "vital",
@@ -8674,7 +9143,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "vivid",
@@ -8692,7 +9162,8 @@
   "multiSense": false,
   "sources": [
    "mathchops"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "volatile",
@@ -8712,7 +9183,8 @@
   "sources": [
    "prepscholar",
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "waive",
@@ -8731,7 +9203,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "warranted",
@@ -8748,7 +9221,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "borderline"
  },
  {
   "word": "withdraw",
@@ -8767,7 +9241,8 @@
   "multiSense": false,
   "sources": [
    "prepscholar"
-  ]
+  ],
+  "level": "familiar"
  },
  {
   "word": "yield",
@@ -8785,6 +9260,7 @@
   "multiSense": true,
   "sources": [
    "testadvantage"
-  ]
+  ],
+  "level": "borderline"
  }
 ]

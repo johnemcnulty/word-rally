@@ -132,6 +132,7 @@ table.board{width:100%;border-collapse:collapse;font-size:15px}
 .feedback p{margin:4px 0}
 .feedback .ex{color:var(--muted);font-style:italic}
 .feedback .corr{font-size:14px;margin-top:8px;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.gotRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
 .waiting{color:var(--muted);text-align:center;padding:50px 0;font-weight:600}
 
 /* Results */
@@ -427,7 +428,7 @@ function howItWorks(){
     <h3>How it works</h3>
     <p><b>Every day at midnight Central</b>, each subject gets a new set of 20: fifteen ${"words or terms"} you haven't had in this cycle and five that lots of players missed recently.</p>
     <p><b>Questions get harder as you go:</b> definitions first, then in context, then complete the statement, then apply it. Harder questions are worth more (10, 12, 14, 16).</p>
-    <p><b>Speed counts, gently.</b> Each question gives you a few seconds to read at full value, then its value drops slowly: one second is a little better than two, but stopping to look a word up costs most of a question.</p>
+    <p><b>Speed counts, gently.</b> Each question gives you a few seconds to read at full value, then its value drops slowly: one second is a little better than two, but stopping to look a word up costs most of a question. Miss one and the clock stops while you read the answer; press <b>Got it</b> when you're ready for the next.</p>
     <p><b>Streaks:</b> finish a set every day to keep your streak for that subject. Every 7 days in a row earns a freeze (hold up to 2), which covers a missed day.</p>
     <p><b>Groups</b> are for one subject. Make one and share the link; everyone in it sees each other's scores for today and the week.</p>
   </div>`;
@@ -607,7 +608,7 @@ async function viewPlay(subject){
 }
 
 function showQuestion(r){
-  clearTimers();
+  clearTimers(); PLAY.releasing = false; PLAY.held = false;
   PLAY.q = r;
   const S = SUBJECTS[PLAY.subject], q = r.question;
   const begin = () => {
@@ -665,7 +666,8 @@ async function answer(choice){
   noteServer(res);
   PLAY.score = res.score; PLAY.correct = res.correct;
   const x = res.result;
-  if (!x) return res.done ? viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak) : showQuestion(res.next);
+  if (!x) return res.done ? viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak)
+    : res.held ? gotIt() : showQuestion(res.next);
   PLAY.marks[r.idx] = x.correct ? "ok" : "no";
   recordPractice(PLAY.subject, x.word, r.question.type, x.correct);
   btns.forEach((b, i) => { b.classList.remove("pending"); if (i === x.answer) b.classList.add("right"); else if (i === choice) b.classList.add("wrong"); else b.classList.add("dim"); });
@@ -677,16 +679,40 @@ async function answer(choice){
       <p><b>${esc(x.word)}</b> — ${esc(x.definition || "")}</p>
       ${!x.correct && x.example ? `<p class="ex">“${esc(x.example)}”</p>` : ""}
       ${x.correction ? `<p class="corr"><b>Class notes check:</b> ${esc(x.correction)}</p>` : ""}
+      ${x.correct ? "" : `<div class="gotRow"><button class="btn primary" id="gotIt">Got it</button><span class="small muted">The clock is stopped. Take your time.</span></div>`}
     </div>`;
-  if (res.done) {
-    PLAY.timer = setTimeout(() => viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak), x.correct ? 1200 : 2600);
-  } else {
-    // The server starts the next question's clock after the feedback pause; show it then.
-    showQuestion(res.next);
+  if (x.correct) {
+    // The server starts the next question's clock after a short pause; show it then.
+    if (res.done) PLAY.timer = setTimeout(() => viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak), 1200);
+    else showQuestion(res.next);
+    return;
+  }
+  // A miss: nothing moves on until the player has read the answer and pressed "Got it".
+  PLAY.held = true;
+  const ck = main().querySelector(".clock"); if (ck) ck.style.opacity = ".3";
+  const go = $("#gotIt");
+  go.onclick = () => res.done ? viewDone(PLAY.subject, PLAY.date, res.done.summary, res.done.review, res.done.streak) : gotIt();
+  go.focus({ preventScroll: true });
+  if (matchMedia("(pointer:coarse)").matches) go.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+// Ask the server for the next question; its clock starts now.
+async function gotIt(){
+  if (PLAY.releasing) return;             // a double tap, or Enter on the focused button
+  PLAY.releasing = true; PLAY.held = false;
+  const go = $("#gotIt"); if (go) go.disabled = true;
+  try {
+    const r = await request({ action: "dailyNext", subject: PLAY.subject, date: PLAY.date, ...creds() }, { retries: 3 });
+    noteServer(r);
+    showQuestion(r);
+  } catch (e) {
+    if (e.code === "bad_player") return handleAuthError(e);
+    viewPlay(PLAY.subject);               // resumes wherever the server says we are
   }
 }
 document.addEventListener("keydown", e => {
-  if (VIEW !== "play" || PLAY.answering || e.target.tagName === "INPUT") return;
+  if (VIEW !== "play" || e.target.tagName === "INPUT") return;
+  if (PLAY.held && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); const g = $("#gotIt"); if (g && !g.disabled) g.click(); return; }
+  if (PLAY.answering) return;
   const n = parseInt(e.key, 10);
   if (n >= 1 && n <= 4 && main().querySelector(".opt")) answer(n - 1);
 });
